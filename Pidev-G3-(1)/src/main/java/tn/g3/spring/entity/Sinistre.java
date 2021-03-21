@@ -216,6 +216,18 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
+			File documents) {
+		super();
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.documents = documents;
+	}
+
+
+
+	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
 			SinisterMotif motifStatus, File documents) {
 		super();
 		this.typeSinistre = typeSinistre;
