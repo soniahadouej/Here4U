@@ -22,7 +22,8 @@ import javax.persistence.InheritanceType;
 @Table(name="Person")
 public abstract class Person implements Serializable {
 
-
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	@Column(name="Id")

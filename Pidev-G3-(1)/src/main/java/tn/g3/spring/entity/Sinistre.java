@@ -19,6 +19,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="Sinistre")
 public class Sinistre implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="IdSinistre")

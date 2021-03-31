@@ -19,7 +19,8 @@ import javax.persistence.TemporalType;
 @DiscriminatorValue("Agent")
 public class Agent extends Person implements Serializable {
 	 
-		
+	private static final long serialVersionUID = 1L;
+
 	@Column(name="CIN", unique=true)
 	private Integer cin;
 	

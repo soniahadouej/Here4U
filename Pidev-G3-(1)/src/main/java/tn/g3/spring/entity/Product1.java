@@ -13,6 +13,7 @@ import javax.persistence.DiscriminatorValue;
 @DiscriminatorValue("Life")
 public class Product1 extends Product implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	
 	@Column(name="Details")
 	private String detailsProd1;

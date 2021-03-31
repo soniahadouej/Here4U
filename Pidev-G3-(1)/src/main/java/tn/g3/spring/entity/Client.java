@@ -20,6 +20,7 @@ import javax.persistence.DiscriminatorValue;
 @DiscriminatorValue("Client")
 public class Client extends Person implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	
 	@Column(name="CIN", unique=true)
 	private Integer cin;
