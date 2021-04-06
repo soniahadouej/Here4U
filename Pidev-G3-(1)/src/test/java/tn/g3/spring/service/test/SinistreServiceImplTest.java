@@ -13,6 +13,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.event.EventListener;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import tn.g3.spring.entity.Sinistre;
 import tn.g3.spring.entity.SinisterStatus;
@@ -39,8 +40,12 @@ public class SinistreServiceImplTest {
 	@Test
 	public void testAddSinistre() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-		Date d = dateFormat.parse("2021-03-18");
-		Sinistre s = new Sinistre (SinisterType.Santé,"Mysec sinistre",d,SinisterStatus.EnAttente, file );
+		Date d = dateFormat.parse("2021-03-21");
+		//String idPersonConnected = RequestContextHolder.currentRequestAttributes().getSessionId();
+		//Long idPersonConnected = 11;
+		
+		Sinistre s = new Sinistre (SinisterType.DécesVieEntiere,"second sinistre",d,SinisterStatus.EnAttente, file );
+
 		Sinistre sinistreAdded = is.addSinistre(s);
 		Assert.assertEquals(s.getIdSinistre(), sinistreAdded.getIdSinistre());
 
@@ -116,12 +121,33 @@ public class SinistreServiceImplTest {
 	public void testStatus() {
 		is.CheckStatus();	
 	}
-*/
+
 	@Test
 	public void testSendMail() {
 		is.SendMail();
 	}
-	 
+	 */
+	
+	//  *****************FEEMME  **************
+	/*@Test
+	public void testCalculPrimeF() {
+		float somme = is.calculPrimefemme(35000, 30, 36, 0.05);
+	}
+	@Test
+	public void testCalculCapitalF() {
+		double somme = is.calculCapitalfemme(30.354326 ,30, 36, 0.05);
+	}
+	
+	@Test
+	public void testCalculCapitalFRachatT() {
+		double somme = is.calculCapitalfemmeAV(30.354326 ,30, 36, 0.05);
+	}*/
+	
+	@Test
+	public void testCalculFinal() {
+		is.calculVieEntiere(30.354326,30, 36, 0.05, "DécesVieEntiere", 1L );
+	}
+	
 }
 
 

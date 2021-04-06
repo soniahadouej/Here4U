@@ -22,7 +22,7 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 	@Query("select count(s) from Sinistre s")
     Long getMax(); 
 	
-	
+	/* ************************************************************************************************* */
 	//recherche par desc
 	@Query("select c from Sinistre c where c.description like  %?1% ORDER By description ASC ")
     List<Sinistre> findByDescription(String desc); //The @Query annotation contains the custom JPQL querty. 
@@ -38,6 +38,11 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 	    List<Sinistre> findByAny(String any); 
 
 
+		//recherche par status en géneral
+				@Query("select c from Sinistre c where c.status = ?1 ")
+			    List<Sinistre> findByStatus(String status);
+
+		 
 		//recherche par sinistre en attente
 		@Query("select c from Sinistre c where c.status = 'EnAttente' ")
 	    List<Sinistre> findByStatusEnAttente();
@@ -62,5 +67,25 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 		//****************SELECT ALL SINISTRES OF A SPECEFIC USER
 	/*	@Query("select c from Sinistre c where  c.user_id = ?1 ")   //@Query("select c from Sinistre c where  c.user.nomUser = ?1 ") 
 		List<Sinistre> findAllUsers(Long idUser);                   // List<Sinistre> findAllUsersByName(String nom);  */
+		
+		
+		//////////////////////////TABLE MORTALITe////////////////
+		@Query("select lx_f from TableMortalité t where id_table = ?1 ") //LIMIT 1
+		float findBySurvivantsLxFemme(int ageClient);
+
+		@Query("select dx_f from TableMortalité t where id_table = ?1 ")
+		float findByDecesDxFemme(int deces);
+		
+		@Query("select lx_f from TableMortalité t where lx_f = ?1 ") //LIMIT 1
+		float findBySurvivantsLxHomme(int ageClient);
+
+		@Query("select dx_f from TableMortalité t where dx_f = ?1 ")
+		float findByDecesDxHomme(int deces);
+		
+		/* *********************************** */
+			//recherche par type sinistre 
+				@Query(value= "select c from sinistre c where CONVERT(c.type_sinistre, String) = 'DécesVieEntiere' ",nativeQuery =true)
+			    Sinistre findByTypeSinistre(String type);
+
 		
 }

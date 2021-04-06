@@ -4,16 +4,23 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -47,16 +54,25 @@ public class Sinistre implements Serializable{
 	@Column(name="Documents")
 	private File documents ;
 	
-	/* //User
-	@ManyToOne 
-	private User user; */
+	/* ************************ */
 
-	/* fi classe User
-	 * @OneToMany(MappedBy=user )
-	 * Sinistre sinistre;	 
-	 */
+	 @ManyToOne( cascade = CascadeType.ALL , fetch= FetchType.EAGER  )
+	 @JsonIgnore
+	 private Person person;
+	 
+	 
+	 
 	
-	
+	 
+	public Person getPerson() {
+		return person;
+	}
+
+
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
 
 
@@ -250,6 +266,35 @@ public class Sinistre implements Serializable{
 		this.status = status;
 		this.motifStatus = motifStatus;
 		this.documents = documents;
+	}
+
+
+
+	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
+			SinisterMotif motifStatus, File documents, Person person) {
+		super();
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.motifStatus = motifStatus;
+		this.documents = documents;
+		this.person = person;
+	}
+
+
+
+	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
+			SinisterStatus status, SinisterMotif motifStatus, File documents, Person person) {
+		super();
+		this.idSinistre = idSinistre;
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.motifStatus = motifStatus;
+		this.documents = documents;
+		this.person = person;
 	}
 	
 	

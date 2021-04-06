@@ -25,6 +25,18 @@ public interface ISinistreSerivce {
 	
 	 void CheckStatus();
 	 void SendMail();
+	 
+	 // ******************FEMME
+	  float calculPrimefemme(float capital , int ageClient, int AgeMax, double taux);
+	  double calculCapitalfemme(double prime , int ageClient, int AgeMax, double taux);
+	  // rachat total
+	  public double calculCapitalfemmeAV(double prime , int ageClient, int AgeMax, double taux);
+	 
+	  // HOMME
+	  float calculPrimeHomme(float capital , int ageClient, int AgeMax, double taux);
+	// float calculPrimeHomme(float capital , int ageClient, int AgeMax, double taux);	
+	  
+	  public String calculVieEntiere(double prime , int ageClient, int AgeMax, double taux, String typeSin, Long idPers);
 
 }
 

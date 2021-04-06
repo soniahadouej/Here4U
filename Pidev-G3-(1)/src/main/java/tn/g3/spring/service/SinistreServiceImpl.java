@@ -14,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import tn.g3.spring.entity.Person;
 import tn.g3.spring.entity.SinisterMotif;
 import tn.g3.spring.entity.Sinistre;
 import tn.g3.spring.entity.SinisterStatus;
+import tn.g3.spring.repository.PersonRepository;
 import tn.g3.spring.repository.SinistreRepository;
 
 @Service
@@ -25,6 +28,9 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 
 	@Autowired     
 	SinistreRepository sinistreRepository ;
+	
+	@Autowired     
+	PersonRepository personRepository ;
 	
 	@Autowired
 	private SendEmailService sendEmailService;
@@ -34,9 +40,17 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 
 	@Override
 	public Sinistre addSinistre(Sinistre s) {
+		// get id user from current session
+	//	String idPersonConnected = RequestContextHolder.currentRequestAttributes().getSessionId();
+        
 		Sinistre sinistreSaved = null;
-		sinistreSaved = sinistreRepository.save(s);
-
+	   // Long id = sinistreSaved.getPerson().getIdPerson();  
+		Long id = (long) 1000;
+		//s.getPerson().setIdPerson(id);
+		
+		sinistreSaved = sinistreRepository.save(s); /*
+user find by id  //recupere de la base luser connecter
+s.setUser */
 		return sinistreSaved;
 
 	}
@@ -108,7 +122,7 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 
 	}*/
 
-	/* ******************************** */
+	/* ***************************************************************************** */
 
 
 	@Override
@@ -117,7 +131,7 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 		Calendar currentdate = Calendar.getInstance(); 
 		Date d = currentdate.getTime();  
 		
-		currentdate.add(Calendar.DAY_OF_MONTH, -2);
+		currentdate.add(Calendar.DAY_OF_MONTH, -5);
 		Date d1= currentdate.getTime();
 	
 	
@@ -126,7 +140,7 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 		
 
 		for(int i=0;i<sinsenattente.size();i++)
-		{  L.info("date OCC:" + sinsenattente.get(i).getDateOccurence()) ;
+		{ // L.info("date OCC:" + sinsenattente.get(i).getDateOccurence()) ;
 		
 		
 			if (sinsenattente.get(i).getDateOccurence().compareTo(d1) < 0)
@@ -156,7 +170,7 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 		} 
 
 	}	
-	/////MAIL
+	///// ************************* MAIL
 
 	@Override
 	public void SendMail() {
@@ -177,7 +191,77 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 		catch (Exception e)
 		{System.out.println(e.getMessage());}
 		}
-		 
+	
+	/* *********************VIE ENTIERE  ********************** */
+	/* ******************** PRIME UNIQUE ********************** */
+	/* *************************FEMME **************************** */
+	@Override
+	public float calculPrimefemme(float capital , int ageClient, int AgeMax, double taux){
+		int k;
+		float prime = 0;
+		for (k =0; k < AgeMax - ageClient; k++) {
+			float dxk= sinistreRepository.findByDecesDxFemme(ageClient+k); 	
+			
+			float lx = sinistreRepository.findBySurvivantsLxFemme(ageClient);
+		   double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
+			 
+			prime = (float) (capital * v) *  ( dxk / lx) ;
+			
+	}
+
+		L.info("PRIME+++++++++ =" + prime) ;
+		return prime;
+	}
+	// 	CAPITALISATION MORT
+	
+	@Override
+	public double calculCapitalfemme(double prime , int ageClient, int AgeMax, double taux){
+		int k;
+		double capital= 0;
+		for (k =0; k < AgeMax - ageClient; k++) {
+			float dxk= sinistreRepository.findByDecesDxFemme(ageClient+k); 	
+			
+			float lx = sinistreRepository.findBySurvivantsLxFemme(ageClient);
+		   double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
+			 
+		    capital = (double) ((prime /( dxk / lx) ) / v)  ;
+			
+	}
+
+		L.info("capital +++++++++ =" + capital) ;
+		return capital;
+	}
+	 ////////////RACHAT TOTAL == AV à terme davance
+	@Override
+	public double calculCapitalfemmeAV(double prime , int ageClient, int AgeMax, double taux){
+		int n = AgeMax - ageClient;
+		double val1 = (Math.pow (1 + taux , n ) -1 ) / taux ;
+		double Sn= ( 1+ taux) * val1;
+		double AV = prime * Sn ;
+		L.info("AV +++++++++ =" + AV) ;
+		return AV;
+	
+	}
+	///////////////////// Rachat partiel
+	
+	
+	@Override
+	public String calculVieEntiere(double prime , int ageClient, int AgeMax, double taux, String typeSin, Long idPers){
+		Sinistre sin = sinistreRepository.findByTypeSinistre(typeSin) ;
+		
+		L.info("AV +++++++++ =" + sin.getTypeSinistre()) ;
+		return "hello";
+		
+	}
+	/* **************************HOMME	*****************           */ 
+	
+	@Override
+	public float calculPrimeHomme(float capital , int ageClient, int AgeMax, double taux){
+		float prime=0;
+		return prime;
 
 	}
+	}
+	
+
 
