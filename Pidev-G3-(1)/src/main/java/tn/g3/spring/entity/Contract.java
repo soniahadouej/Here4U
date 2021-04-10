@@ -64,9 +64,9 @@ public class Contract implements Serializable {
 	@ManyToOne
 	Product product;
 	
-	@ManyToOne
-	Client client;
-	
+//	@ManyToOne
+//	Client client;
+//	
 	@ManyToMany(cascade = CascadeType.ALL) 
 	private Set<Offer> offers;
 	

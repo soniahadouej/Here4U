@@ -62,8 +62,8 @@ public abstract class Product implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="product")
 	private Set<Contract> contracts;
 	
-	@ManyToOne
-	Agent agent;
+//	@ManyToOne
+//	Agent agent;
 	
 	public Product(){}
 	public Product(Long idProduct,String productType,String descriptionProduct,Date startProduct,Date finishProduct,ProductStatus statusProduct,String feedback,String nameProduct){

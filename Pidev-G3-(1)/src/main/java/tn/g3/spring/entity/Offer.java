@@ -57,8 +57,8 @@ public class Offer implements Serializable {
 	@Column(name="MaxRedemption")
 	private Integer maxRedemptionOffer;
 	
-	@ManyToOne
-	Agent agent;
+//	@ManyToOne
+//	Agent agent;
 	
 	@ManyToMany(mappedBy="offers", cascade = CascadeType.ALL) 
 	private Set<Contract> contracts;
