@@ -27,6 +27,26 @@ public class SinistreController {
 	ISinistreSerivce sr;
 	
 	
+	//AJOUUUT
+	 //  http://localhost:8000/SpringMVC/servlet/add-sinistre/id
+	 /* {
+	    "dateOccurence" : "2010-03-23", 
+	    "description" :"Description detaillée du sinistre", 
+	    "documents" : "null",
+	    "typeSinistre": "DécesVieEntiere",  "RachatTotalVieEntiere" "RachatPartielVieEntiere"
+	     "status" : "EnAttente" ,  "En_Cous" "Rejetée" "Validée"
+	 
+	      }		*/
+	  @PostMapping("/add-sinistre/{id}")
+	 // @ResponseBody()
+	  public Sinistre addSinister(@RequestBody Sinistre s ,@PathVariable(value ="id") Long id) {
+		 // System.out.println(id);
+		  Sinistre sin = sr.addSinistre(s,id);
+	  return sin ;
+	  
+	  }
+	
+	
 	// http://localhost:8000/SpringMVC/servlet/retrieve-All-Sinistres  
 		 @GetMapping("/retrieve-All-Sinistres")
 		 @ResponseBody
@@ -36,14 +56,15 @@ public class SinistreController {
 		 return sins;
 		 } 
 		 
-			// http://localhost:8000/SpringMVC/servlet/getSinisterByAny/any
+		 //// FIND ?
+		/*	// http://localhost:8000/SpringMVC/servlet/getSinisterByAny/any
 		 @GetMapping("/getSinisterByAny/{any}")
 		 @ResponseBody
 		 public List<Sinistre> getsinisterbyAny(@PathVariable(value = "any") String any) {
 		 List<Sinistre> sinistres =sr.findByAny(any);
 		 return sinistres;
 		 } 
-		 
+		 */
 		 // http://localhost:8000/SpringMVC/servlet/retrieve-sinistre/{id_sinistre}
 		  @GetMapping("/retrieve-sinistre/{id_sinistre}")
 		  public Sinistre retrieveUser(@PathVariable("id_sinistre") String sinisterid) {
@@ -51,22 +72,7 @@ public class SinistreController {
 		  return sr.retrieveSinistre(sinisterid);
 		  }
 		  
-
-		 // Ajouter sinister : http://localhost:8000/SpringMVC/servlet/add-sinistre
-		 /* {
-		    "dateOccurence" : "2010-03-23", 
-		    "description" :"neeeew 2", 
-		    "documents" : "null",
-		    "typeSinistre": "Vie",
-		     "status" : "Rejetée"
-		      }		*/
-		  @PostMapping("/add-sinistre")
-		 // @ResponseBody()
-		  public Sinistre addSinister(@RequestBody Sinistre s) {
-			  Sinistre sin = sr.addSinistre(s);
-		  return sin ;
-		  
-		  }
+		  	
 		
 		// http://localhost:8000/SpringMVC/servlet/remove-sinistre/{sinistre-id}
 		   @DeleteMapping("/remove-sinistre/{sinistre-id}")
@@ -76,9 +82,113 @@ public class SinistreController {
 		   
 		  
 		   // http://localhost:8000/SpringMVC/servlet/modify-sinistre
-		   @PutMapping("/modify-sinistre")
+		   @PutMapping("/modify-sinistre/{sinistre-id")
 		    @ResponseBody
-		    public Sinistre modifySinistre(@RequestBody Sinistre sinistre){
-		    return sr.updateSinistre(sinistre);
+		    public Sinistre modifySinistre(@PathVariable("sinistre-id") Sinistre sinId){
+		    return sr.updateSinistre(sinId);
 		   }
+		   
+		   
+		   
+		  		  	   ///AFFECTATION
+		 //http://localhost:8000/SpringMVC/servlet/affecter-sinistre/10/10
+			  @PutMapping(value = "/affecter-sinistre/{idSin}/{idUser}") 
+			  public void affecterSinistrePerson(@PathVariable("idSin")Long idSin, @PathVariable("idUser")Long idUser) {
+			  sr.affecterSinisterPerson(idSin, idUser);
+			  }
+			  		   
+		   
+		   
+		   
+		   /////////////////////////// *********CHECCK STATUS ++ send Mail
+		// http://localhost:8000/SpringMVC/servlet/check-status_SendMail
+		   @PutMapping("/check-status_SendMail")
+		    @ResponseBody
+		   public void testStatus() {
+				sr.CheckStatus();	
+				 sr.SendMail();
+				
+			}
+		   
+		  //  http://localhost:8000/SpringMVC/servlet/send-mail
+		   @GetMapping("/send-mail")
+		   @ResponseBody
+		   public void testSendMail() {
+			  
+			}
+
+		   
+		   ///////////////////////////// CACUL VIE ENTIERE////////////////////////
+		   // http://localhost:8000/SpringMVC/servlet/CalculVieEntiere/{prime}/{ageClient}/{AgeMax}/{idSin}
+		   // http://localhost:8000/SpringMVC/servlet/CalculVieEntiere/30.354326/30/36/21
+		   @GetMapping("/CalculVieEntiere/{prime}/{ageClient}/{AgeMax}/{idSin}")
+		   @ResponseBody
+		   public double testCalculFinal(@PathVariable(value = "prime") double prime, @PathVariable(value = "ageClient")int ageClient,
+			   @PathVariable(value = "AgeMax") int AgeMax, @PathVariable(value = "idSin") Long idSin)
+		   
+				{double taux = 0.0624 ; 
+			     double res=0;
+			   
+			   //RECUPERER LES SINISTRE EN ATTENTE
+			   if (sr.FindByIdSin(idSin).getPerson().getSex().toString().equals("Female") ){  //cas Female
+			   	if ( sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("DécesVieEntiere") )
+						{
+			   		
+			   		// if 
+					 res = sr.calculCapitalfemme(prime ,ageClient, AgeMax, taux);
+					 // else prime périodique
+					 //res = sr.calculCapitalfemmePPer(prime ,ageClient, AgeMax, taux);
+					 
+						}
+				else if (sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("RachatTotalVieEntiere") ) // 1 seul cas de prime 
+				{
+					res = sr.calculCapitalAV(prime, ageClient, AgeMax, taux);
+				} 
+			   }
+			    
+			    else  
+			    {
+			    	if ( sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("DécesVieEntiere") )
+					{
+				 res = sr.calculCapitalHomme(prime ,ageClient, AgeMax, taux);
+					}
+			    	else if (sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("RachatTotalVieEntiere") )
+					{
+			    		res = sr.calculCapitalAV(prime, ageClient, AgeMax, taux);
+					} 
+			    }
+			    return res;	
+			   
+				
+			}
+		  
+		   
+		   ///////////////////////CREDI SIMULATOR
+		   
+		//  http://localhost:8000/SpringMVC/servlet/creditsimul//0/
+		   @GetMapping("/creditsimul/{idU}/{idC}")
+			  @ResponseBody
+			  public float creditsimul( @PathVariable("idU") Long idU , @PathVariable("idC") Long idC)  {
+					float k = 0 ;
+					k = (float) sr.CreditSimulator(idU, idC) ; 
+					return k ;
+		
+}
+		   
+		   
+		   
+		   /////////////////////////////////////JOINTURE
+		//  http://localhost:8000/SpringMVC/servlet/FindSinistreDescription/1
+		   @GetMapping("/FindSinistreDescription/{idC}")
+		    @ResponseBody
+		   public List<Sinistre> findSinisterfromClaim(@PathVariable("idC") Long id)
+			{ 
+				List<Sinistre> k = sr.findSinisterfromClaim(id);
+				return k;
+				
+			}
+		   
+		   
+		   
+		   
 }

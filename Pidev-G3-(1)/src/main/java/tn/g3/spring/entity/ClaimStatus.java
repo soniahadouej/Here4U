@@ -1,5 +1,5 @@
 package tn.g3.spring.entity;
 
-public enum ClaimStatus {
+public enum ClaimStatus {l
 
 }

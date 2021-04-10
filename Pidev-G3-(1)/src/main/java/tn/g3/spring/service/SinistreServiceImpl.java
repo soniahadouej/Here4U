@@ -4,9 +4,14 @@ package tn.g3.spring.service;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,42 +21,55 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import com.sun.el.parser.ParseException;
+
+import tn.g3.spring.entity.Claim;
+import tn.g3.spring.entity.Contract;
 import tn.g3.spring.entity.Person;
 import tn.g3.spring.entity.SinisterMotif;
 import tn.g3.spring.entity.Sinistre;
 import tn.g3.spring.entity.SinisterStatus;
+import tn.g3.spring.repository.ClaimRepository;
+import tn.g3.spring.repository.ContractRepository;
 import tn.g3.spring.repository.PersonRepository;
 import tn.g3.spring.repository.SinistreRepository;
-
+@Transactional
 @Service
 public class SinistreServiceImpl implements ISinistreSerivce{
 
 	@Autowired     
 	SinistreRepository sinistreRepository ;
-	
+
 	@Autowired     
 	PersonRepository personRepository ;
-	
+
+	@Autowired
+	ContractRepository cr ;
+
+	@Autowired
+	ClaimRepository claimr ;
+
 	@Autowired
 	private SendEmailService sendEmailService;
-	
+
 	File file = new File("C:\\Users\\Sonia\\Desktop\\11.jpg");
 	private static final Logger L = LogManager.getLogger(SinistreServiceImpl.class);
 
 	@Override
-	public Sinistre addSinistre(Sinistre s) {
+	public Sinistre addSinistre(Sinistre s,Long id) {
 		// get id user from current session
-	//	String idPersonConnected = RequestContextHolder.currentRequestAttributes().getSessionId();
-        
-		Sinistre sinistreSaved = null;
-	   // Long id = sinistreSaved.getPerson().getIdPerson();  
-		Long id = (long) 1000;
+		//	String idPersonConnected = RequestContextHolder.currentRequestAttributes().getSessionId();
+		Person p=personRepository.findById(id).get();
+		System.out.println("idddddd"+p.getIdPerson());
+		//Sinistre sinistreSaved = null;
+		// Long id = sinistreSaved.getPerson().getIdPerson();  
+		//Long id = (long) 1000;
 		//s.getPerson().setIdPerson(id);
-		
-		sinistreSaved = sinistreRepository.save(s); /*
-user find by id  //recupere de la base luser connecter
-s.setUser */
-		return sinistreSaved;
+		s.setPerson(p);
+		sinistreRepository.save(s); /*
+	user find by id  //recupere de la base luser connecter
+	s.setUser */
+		return s;
 
 	}
 	@Override
@@ -130,27 +148,27 @@ s.setUser */
 		List<Sinistre> sinsenattente = sinistreRepository.findByStatusEnAttente();
 		Calendar currentdate = Calendar.getInstance(); 
 		Date d = currentdate.getTime();  
-		
+
 		currentdate.add(Calendar.DAY_OF_MONTH, -5);
 		Date d1= currentdate.getTime();
-	
-	
+
+
 		SinisterStatus status=SinisterStatus.Rejetée;
-		SinisterStatus status2=SinisterStatus.En_Cous;
-		
+		SinisterStatus status2=SinisterStatus.En_Cours;
+
 
 		for(int i=0;i<sinsenattente.size();i++)
 		{ // L.info("date OCC:" + sinsenattente.get(i).getDateOccurence()) ;
-		
-		
+
+
 			if (sinsenattente.get(i).getDateOccurence().compareTo(d1) < 0)
 			{
-				 L.info("BOUCLE 1:");
-				 SinisterMotif motif=SinisterMotif.depasse2jours;
+				L.info("BOUCLE 1:");
+				SinisterMotif motif=SinisterMotif.depasse2jours;
 				sinsenattente.get(i).setStatus(status);
 				sinsenattente.get(i).setMotifStatus(motif);
-				 sinistreRepository.save(sinsenattente.get(i));
-				 L.info("new sin +++ :" + sinsenattente.get(i)) ;
+				sinistreRepository.save(sinsenattente.get(i));
+				L.info("new sin +++ :" + sinsenattente.get(i)) ;
 
 			}
 			else if (sinsenattente.get(i).getDocuments() == null)
@@ -159,8 +177,8 @@ s.setUser */
 				SinisterMotif motif=SinisterMotif.Motif2;
 				sinsenattente.get(i).setStatus(status);
 				sinsenattente.get(i).setMotifStatus(motif);
-				 sinistreRepository.save(sinsenattente.get(i));
-				 L.info("new sin 2 +++ :" + sinsenattente.get(i));
+				sinistreRepository.save(sinsenattente.get(i));
+				L.info("new sin 2 +++ :" + sinsenattente.get(i));
 			} 
 			else {
 				sinsenattente.get(i).setStatus(status2);
@@ -175,93 +193,233 @@ s.setUser */
 	@Override
 	public void SendMail() {
 		try {
-		List<Sinistre> sinstreRej = sinistreRepository.findByStatusRejetée();
+			List<Sinistre> sinstreRej = sinistreRepository.findByStatusRejetée();
 
-		//SimpleMailMessage mail = new SimpleMailMessage();
-		for(int i=0;i< sinstreRej.size();i++)
-		{   // String email = sinstreRej.get(i).getClient().getEmail();
-			//nom=  String email = sinstreRej.get(i).getClient().getNom();
-			String motif =sinstreRej.get(i).getMotifStatus().toString(); 
-			String date =sinstreRej.get(i).getDateOccurence().toString(); 
-			
-			sendEmailService.sendEmail("hadouejnadia@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
-					+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
-		} 
+			//SimpleMailMessage mail = new SimpleMailMessage();
+			for(int i=0;i< sinstreRej.size();i++)
+			{   // String email = sinstreRej.get(i).getClient().getEmail();
+				//nom=  String email = sinstreRej.get(i).getClient().getNom();
+				String motif =sinstreRej.get(i).getMotifStatus().toString(); 
+				String date =sinstreRej.get(i).getDateOccurence().toString(); 
+
+				sendEmailService.sendEmail("hadouejnadia@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
+						+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
+			} 
 		} 
 		catch (Exception e)
 		{System.out.println(e.getMessage());}
-		}
-	
+	}
+
 	/* *********************VIE ENTIERE  ********************** */
 	/* ******************** PRIME UNIQUE ********************** */
 	/* *************************FEMME **************************** */
+
+////////////FIND
+	@Override
+	public Sinistre FindByIdSin(Long id)
+	{
+		return sinistreRepository.findByIdSin(id) ;
+	}
+
+	@Override
+	public void FindByIdPer(Long id) 
+	{
+		try {
+			long idp= sinistreRepository.findByIdPerson(id) ;
+			String pdf=  personRepository.findById(idp).get().getFirstName();
+			L.info("PRIME+++++++++ =" + pdf)  ;
+		}
+		catch (Exception e)
+		{System.out.println(e.getMessage());}
+	}
+
+
+//-----------------------------prime ?--------------------------------------**
+
 	@Override
 	public float calculPrimefemme(float capital , int ageClient, int AgeMax, double taux){
 		int k;
 		float prime = 0;
 		for (k =0; k < AgeMax - ageClient; k++) {
 			float dxk= sinistreRepository.findByDecesDxFemme(ageClient+k); 	
-			
+
 			float lx = sinistreRepository.findBySurvivantsLxFemme(ageClient);
-		   double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
-			 
+			double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
+
 			prime = (float) (capital * v) *  ( dxk / lx) ;
-			
-	}
+
+		}
 
 		L.info("PRIME+++++++++ =" + prime) ;
 		return prime;
 	}
 	// 	CAPITALISATION MORT
-	
+
 	@Override
 	public double calculCapitalfemme(double prime , int ageClient, int AgeMax, double taux){
 		int k;
 		double capital= 0;
 		for (k =0; k < AgeMax - ageClient; k++) {
 			float dxk= sinistreRepository.findByDecesDxFemme(ageClient+k); 	
-			
+
 			float lx = sinistreRepository.findBySurvivantsLxFemme(ageClient);
-		   double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
-			 
-		    capital = (double) ((prime /( dxk / lx) ) / v)  ;
-			
-	}
+			double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
+
+			capital = (double) ((prime /( dxk / lx) ) / v)  ;
+
+		}
 
 		L.info("capital +++++++++ =" + capital) ;
 		return capital;
 	}
-	 ////////////RACHAT TOTAL == AV à terme davance
+	////////////RACHAT TOTAL == AV à terme davance
 	@Override
-	public double calculCapitalfemmeAV(double prime , int ageClient, int AgeMax, double taux){
+	public double calculCapitalAV(double prime , int ageClient, int AgeMax, double taux){
 		int n = AgeMax - ageClient;
 		double val1 = (Math.pow (1 + taux , n ) -1 ) / taux ;
 		double Sn= ( 1+ taux) * val1;
 		double AV = prime * Sn ;
 		L.info("AV +++++++++ =" + AV) ;
 		return AV;
-	
-	}
-	///////////////////// Rachat partiel
-	
-	
-	@Override
-	public String calculVieEntiere(double prime , int ageClient, int AgeMax, double taux, String typeSin, Long idPers){
-		Sinistre sin = sinistreRepository.findByTypeSinistre(typeSin) ;
-		
-		L.info("AV +++++++++ =" + sin.getTypeSinistre()) ;
-		return "hello";
-		
-	}
-	/* **************************HOMME	*****************           */ 
-	
-	@Override
-	public float calculPrimeHomme(float capital , int ageClient, int AgeMax, double taux){
-		float prime=0;
-		return prime;
 
 	}
+
+	/*
+	///////////////////// Rachat partiel
+
+	@Override
+	public String calculVieEntiere(double prime , int ageClient, int AgeMax, double taux, Long idsin, Long idPers){
+		double res =0;
+			Sinistre sin = sinistreRepository.findByIdSin(idsin);
+		if  (sin.getTypeSinistre().toString().equals("DécesVieEntiere"))
+			{
+			res = calculCapitalfemme( prime , ageClient, AgeMax, taux);
+			}
+		else if  (sin.getTypeSinistre().toString().equals("RachatTotalVieEntiere"))
+		{
+			res=calculCapitalfemmeAV( prime , ageClient,  AgeMax, taux) ;
+		}
+
+		L.info("AV +++++++++ =" + res) ;
+		return "heo";
+
+	} */
+	/* **************************HOMME	*****************           */ 
+
+	@Override
+	public double calculCapitalHomme(double prime , int ageClient, int AgeMax, double taux){
+		int k;
+		double capital= 0;
+		for (k =0; k < AgeMax - ageClient; k++) {
+			float dxk= sinistreRepository.findByDecesDxHomme(ageClient+k); 	
+
+			float lx = sinistreRepository.findBySurvivantsLxHomme(ageClient);
+			double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
+
+			capital = (double) ((prime /( dxk / lx) ) / v)  ;
+
+		}
+		L.info("capital +++++++++ =" + capital) ;
+		return capital;
+	}
+
+
+
+
+/* ********************************************************************************** */
+
+/* ********************************************************************************* */
+/* **//////////////////////////////////////*PRIME PERIODIQUE***************/
+
+////////////////////////FEMME
+//	@Override
+	public double calculCapitalfemmePPer(double prime , int ageClient, int AgeMax, double taux){
+		int k;
+		double capitaltotal= 0;
+		double capital1= 0;
+		double capital2= 0;
+		for (k =0; k < AgeMax - ageClient; k++) {  //partie isar
+		
+			float lxplusk = sinistreRepository.findBySurvivantsLxFemme(ageClient+k);
+			float lx = sinistreRepository.findBySurvivantsLxFemme(ageClient);
+			
+			
+			double vk = Math.pow( 1/ (1+taux) ,  k  );
+			capital1= prime * (lxplusk/ lx  ) * vk; 
+
+		}
+		for (k =0; k < AgeMax - ageClient; k++) { //partie imin
+			float dxk= sinistreRepository.findByDecesDxFemme(ageClient+k); 	
+			float lx = sinistreRepository.findBySurvivantsLxFemme(ageClient);
+			
+			double vk = Math.pow( 1/ (1+taux) , k + (1/2)  );
+			capital2= prime * (dxk/ lx  ) * vk; 
+
+		}
+		capitaltotal= capital1  / capital2;
+
+		L.info("capital +++++++++ =" + capitaltotal) ;
+		return capitaltotal;
 	}
 	
+	
+	/////////////HOMME
+	
+	
+
+
+/////////AFFECTATION
+
+@Transactional	
+public void affecterSinisterPerson(Long SinId, Long persId) {
+	Person u = personRepository.findById(persId).get();
+	Sinistre s = sinistreRepository.findById(SinId).get();
+
+	if(s.getPerson() == null){
+
+		List<Person> pers = new ArrayList<>();
+		pers.add(u);
+		s.setPerson(u);
+	}else{
+
+		s.setPerson(u);
+
+	}
+
+}
+
+
+
+//////CREDIT SIMULATOR
+public double CreditSimulator( Long idp, Long idc) {
+
+	double taux = 0.062;
+	Person u= personRepository.findById(idp).get();
+	Contract  c =cr.findById(idc).get();
+	//Long id=(Long)session.getAttribute("name");	 
+	long dateFin = c.getFinishContract().getTime();
+	long dateStart = c.getStartContract().getTime();
+	long dur=dateFin-dateStart;
+	double Montant= personRepository.findBySalary(idp) *  0.8;
+	double a = Math.pow((1+taux),-dur);
+	double mfy=Montant*(taux/(1-a));
+	return mfy ; 
+
+}
+
+//////////////////////////// jointuuuure
+@Override
+public 	List<Sinistre> findSinisterfromClaim( Long id)
+{ 
+	List<Sinistre> k = sinistreRepository.findSinisterDescriptionwithUR(id);
+	L.info("description +++ :" + k) ;
+	return k;
+
+}
+
+
+
+}
+
 
 

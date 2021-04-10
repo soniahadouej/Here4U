@@ -12,7 +12,10 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
 
 
 	//recherche par id
-			@Query("select p from Person p where p.idPerson =0")
-		    Person findByIdPerson();
+	//@Query("select p from Person p where p.idPerson =0")
+	//Person findByIdPerson();
+
+	@Query("select p.salary from Person p where p.idPerson =?1")
+	  float findBySalary(Long id);
 
 }

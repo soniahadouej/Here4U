@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.DiscriminatorValue;
 import java.util.Date;
@@ -18,8 +21,7 @@ import javax.persistence.TemporalType;
 @Entity
 @DiscriminatorValue("Agent")
 public class Agent extends Person implements Serializable {
-	 
-		
+	
 	@Column(name="CIN", unique=true)
 	private Integer cin;
 	
@@ -56,8 +58,8 @@ public class Agent extends Person implements Serializable {
 	private Set<Offer> offers;
 	
 	public Agent(){}
-	public Agent(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress,Integer cin,GradeType typeGrade,Date hiringDate,Float salary,Integer delay,Integer warning,String login,String password,String email){
-		super(idPerson,personType,firstName,lastName,phoneNumber,age,sex,adress);
+	public Agent(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex/*, Adress adress*/,Integer cin,GradeType typeGrade,Date hiringDate,Float salary,Integer delay,Integer warning,String login,String password,String email){
+		super(idPerson,personType,firstName,lastName,phoneNumber,age,sex/*,adress*/);
 		this.cin=cin;this.typeGrade=typeGrade;this.hiringDate=hiringDate;this.salary=salary;this.delay=delay;this.warning=warning;this.login=login;this.password=password;this.email=email;
 		
 	}

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -57,6 +58,7 @@ public class Sinistre implements Serializable{
 	/* ************************ */
 
 	 @ManyToOne( cascade = CascadeType.ALL , fetch= FetchType.EAGER  )
+//	 @JoinColumn(name = "idPerson" , referencedColumnName = "IdPerson")
 	 @JsonIgnore
 	 private Person person;
 	 

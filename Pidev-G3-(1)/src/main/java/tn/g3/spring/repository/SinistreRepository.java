@@ -34,7 +34,7 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 	
 	//recherche mixte
 		//indexed query
-		@Query("select c from Sinistre c where CONCAT (c.status ,c.description, c.dateOccurence )like  %?1% ")
+		@Query("select c from Sinistre c where CONCAT (c.status ,c.description, c.dateOccurence, c.typeSinistre, c.motifStatus )like  %?1% ")
 	    List<Sinistre> findByAny(String any); 
 
 
@@ -76,16 +76,33 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 		@Query("select dx_f from TableMortalité t where id_table = ?1 ")
 		float findByDecesDxFemme(int deces);
 		
-		@Query("select lx_f from TableMortalité t where lx_f = ?1 ") //LIMIT 1
+		@Query("select lx_h from TableMortalité t where id_table = ?1 ") //LIMIT 1
 		float findBySurvivantsLxHomme(int ageClient);
 
-		@Query("select dx_f from TableMortalité t where dx_f = ?1 ")
+		@Query("select dx_h from TableMortalité t where id_table = ?1 ")
 		float findByDecesDxHomme(int deces);
 		
 		/* *********************************** */
 			//recherche par type sinistre 
-				@Query(value= "select c from sinistre c where CONVERT(c.type_sinistre, String) = 'DécesVieEntiere' ",nativeQuery =true)
-			    Sinistre findByTypeSinistre(String type);
+			/*	@Query("select c from Sinistre c where c.typeSinistre ='DécesVieEntiere' ")
+			    Sinistre findByTypeSinistre();
+				
+				@Query("select c from Sinistre c where c.typeSinistre = ?1 ")
+			    Sinistre findByTypeSinistre2(String ch);*/
 
-		
+		//id
+				@Query("select c from Sinistre c where c.idSinistre = ?1 AND c.status = 'En_Cours' ")
+			    Sinistre findByIdSin(Long id);
+				
+				@Query("select c.person from Sinistre c where c.person = ?1 ")
+			    long findByIdPerson(Long idP);
+				
+				
+
+				/* ******************************** JOINTURE ************** */ 
+				@Query("select c from Sinistre c  JOIN c.person p Join p.claim s where s.idClaim =:idd AND s.categoryClaim= 'Sinistre' ")
+				List<Sinistre> findSinisterDescriptionwithUR(@Param("idd") Long id);
+				//je selectionne les user ayant un sinistre et ayant fait une reclammation
+				//nhot lid mtaa la reclammation ykharajlii la description du sinistre li aamlou 
+				
 }
