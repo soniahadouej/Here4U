@@ -1,8 +1,6 @@
 package tn.g3.spring.entity;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,11 +9,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import tn.g3.spring.entity.ContractOffer;
 
 @Entity
 @Table(name="Offer")
@@ -25,128 +23,112 @@ public class Offer implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	@Column(name="Id")
-	private long idOffer;
+	@Column(name="IdOffer")
+	private long idOffer; 
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="Type")
+	@Column(name="TypeOffer")
 	private OfferType typeOffer;
 
-	@Column(name="Description")
+	@Column(name="DescriptionOffer")
 	private String descriptionOffer;
-	
-	@Temporal (TemporalType.DATE)
-	@Column(name="Start")
-	private Date startOffer;
 
-	@Temporal (TemporalType.DATE)
-	@Column(name="Expire")
-	private Date finishOffer;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name="Status")
-	private OfferStatus statusOffer;
-
-	@Column(name="Name")
+	@Column(name="NameOffer")
 	private String nameOffer;
 	
-	@Column(name="Code")
+	@Column(name="CodeOffer")
 	private String codeOffer;
 
 	@Column(name="MaxRedemption")
-	private Integer maxRedemptionOffer;
+	private Integer maxRedemption;
 	
 	@ManyToOne
 	Agent agent;
 	
-	@ManyToMany(mappedBy="offers", cascade = CascadeType.ALL) 
-	private Set<Contract> contracts;
+	/*@ManyToMany(mappedBy="offers", cascade = CascadeType.ALL) 
+	private Set<Contract> contracts;*/
 	
+	@OneToMany(mappedBy="offer",cascade = CascadeType.ALL)
+	private  List<ContractOffer> contractOffers;
+
 	public long getIdOffer() {
 		return idOffer;
 	}
+
 	public void setIdOffer(long idOffer) {
 		this.idOffer = idOffer;
 	}
+
 	public OfferType getTypeOffer() {
 		return typeOffer;
 	}
+
 	public void setTypeOffer(OfferType typeOffer) {
 		this.typeOffer = typeOffer;
 	}
+
 	public String getDescriptionOffer() {
 		return descriptionOffer;
 	}
+
 	public void setDescriptionOffer(String descriptionOffer) {
 		this.descriptionOffer = descriptionOffer;
 	}
-	public Date getStartOffer() {
-		return startOffer;
-	}
-	public void setStartOffer(Date startOffer) {
-		this.startOffer = startOffer;
-	}
-	public Date getFinishOffer() {
-		return finishOffer;
-	}
-	public void setFinishOffer(Date finishOffer) {
-		this.finishOffer = finishOffer;
-	}
-	public OfferStatus getStatusOffer() {
-		return statusOffer;
-	}
-	public void setStatusOffer(OfferStatus statusOffer) {
-		this.statusOffer = statusOffer;
-	}
+
 	public String getNameOffer() {
 		return nameOffer;
 	}
+
 	public void setNameOffer(String nameOffer) {
 		this.nameOffer = nameOffer;
 	}
+
 	public String getCodeOffer() {
 		return codeOffer;
 	}
+
 	public void setCodeOffer(String codeOffer) {
 		this.codeOffer = codeOffer;
 	}
-	public Integer getMaxRedemptionOffer() {
-		return maxRedemptionOffer;
+
+	public Integer getMaxRedemption() {
+		return maxRedemption;
 	}
-	public void setMaxRedemptionOffer(Integer maxRedemptionOffer) {
-		this.maxRedemptionOffer = maxRedemptionOffer;
+
+	public void setMaxRedemption(Integer maxRedemption) {
+		this.maxRedemption = maxRedemption;
 	}
+
 	public Agent getAgent() {
 		return agent;
 	}
+
 	public void setAgent(Agent agent) {
 		this.agent = agent;
 	}
-	public Set<Contract> getContracts() {
-		return contracts;
+
+	public List<ContractOffer> getContractOffers() {
+		return contractOffers;
 	}
-	public void setContracts(Set<Contract> contracts) {
-		this.contracts = contracts;
+
+	public void setContractOffers(List<ContractOffer> contractOffers) {
+		this.contractOffers = contractOffers;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((agent == null) ? 0 : agent.hashCode());
 		result = prime * result + ((codeOffer == null) ? 0 : codeOffer.hashCode());
-		result = prime * result + ((contracts == null) ? 0 : contracts.hashCode());
+		result = prime * result + ((contractOffers == null) ? 0 : contractOffers.hashCode());
 		result = prime * result + ((descriptionOffer == null) ? 0 : descriptionOffer.hashCode());
-		result = prime * result + ((finishOffer == null) ? 0 : finishOffer.hashCode());
 		result = prime * result + (int) (idOffer ^ (idOffer >>> 32));
-		result = prime * result + ((maxRedemptionOffer == null) ? 0 : maxRedemptionOffer.hashCode());
+		result = prime * result + ((maxRedemption == null) ? 0 : maxRedemption.hashCode());
 		result = prime * result + ((nameOffer == null) ? 0 : nameOffer.hashCode());
-		result = prime * result + ((startOffer == null) ? 0 : startOffer.hashCode());
-		result = prime * result + ((statusOffer == null) ? 0 : statusOffer.hashCode());
 		result = prime * result + ((typeOffer == null) ? 0 : typeOffer.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -156,86 +138,64 @@ public class Offer implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Offer other = (Offer) obj;
-		if (agent == null) {
-			if (other.agent != null)
-				return false;
-		} else if (!agent.equals(other.agent))
-			return false;
 		if (codeOffer == null) {
 			if (other.codeOffer != null)
 				return false;
 		} else if (!codeOffer.equals(other.codeOffer))
 			return false;
-		if (contracts == null) {
-			if (other.contracts != null)
+		if (contractOffers == null) {
+			if (other.contractOffers != null)
 				return false;
-		} else if (!contracts.equals(other.contracts))
+		} else if (!contractOffers.equals(other.contractOffers))
 			return false;
 		if (descriptionOffer == null) {
 			if (other.descriptionOffer != null)
 				return false;
 		} else if (!descriptionOffer.equals(other.descriptionOffer))
 			return false;
-		if (finishOffer == null) {
-			if (other.finishOffer != null)
-				return false;
-		} else if (!finishOffer.equals(other.finishOffer))
-			return false;
 		if (idOffer != other.idOffer)
 			return false;
-		if (maxRedemptionOffer == null) {
-			if (other.maxRedemptionOffer != null)
+		if (maxRedemption == null) {
+			if (other.maxRedemption != null)
 				return false;
-		} else if (!maxRedemptionOffer.equals(other.maxRedemptionOffer))
+		} else if (!maxRedemption.equals(other.maxRedemption))
 			return false;
 		if (nameOffer == null) {
 			if (other.nameOffer != null)
 				return false;
 		} else if (!nameOffer.equals(other.nameOffer))
 			return false;
-		if (startOffer == null) {
-			if (other.startOffer != null)
-				return false;
-		} else if (!startOffer.equals(other.startOffer))
-			return false;
-		if (statusOffer != other.statusOffer)
-			return false;
 		if (typeOffer != other.typeOffer)
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Offer [idOffer=" + idOffer + ", typeOffer=" + typeOffer + ", descriptionOffer=" + descriptionOffer
-				+ ", startOffer=" + startOffer + ", finishOffer=" + finishOffer + ", statusOffer=" + statusOffer
-				+ ", nameOffer=" + nameOffer + ", codeOffer=" + codeOffer + ", maxRedemptionOffer=" + maxRedemptionOffer
-				+ ", agent=" + agent + ", contracts=" + contracts + "]";
+				+ ", nameOffer=" + nameOffer + ", codeOffer=" + codeOffer + ", maxRedemption=" + maxRedemption
+				+ ", contractOffers=" + contractOffers + "]";
 	}
-	
-	
-	public Offer(long idOffer, OfferType typeOffer, String descriptionOffer, Date startOffer, Date finishOffer,
-			OfferStatus statusOffer, String nameOffer, String codeOffer, Integer maxRedemptionOffer, Agent agent,
-			Set<Contract> contracts) {
+
+	public Offer(long idOffer, OfferType typeOffer, String descriptionOffer, String nameOffer, String codeOffer,
+			Integer maxRedemption, Agent agent, List<ContractOffer> contractOffers) {
 		super();
 		this.idOffer = idOffer;
 		this.typeOffer = typeOffer;
 		this.descriptionOffer = descriptionOffer;
-		this.startOffer = startOffer;
-		this.finishOffer = finishOffer;
-		this.statusOffer = statusOffer;
 		this.nameOffer = nameOffer;
 		this.codeOffer = codeOffer;
-		this.maxRedemptionOffer = maxRedemptionOffer;
+		this.maxRedemption = maxRedemption;
 		this.agent = agent;
-		this.contracts = contracts;
+		this.contractOffers = contractOffers;
 	}
-	public Offer() {
 
+	public Offer() {
 		super();
 	}
-	
-	
-	
+
+
+
 	
 }
 
