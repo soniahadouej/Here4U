@@ -41,6 +41,7 @@ public class SinistreController {
 	 // @ResponseBody()
 	  public Sinistre addSinister(@RequestBody Sinistre s ,@PathVariable(value ="id") Long id) {
 		 // System.out.println(id);
+		  s.setStatus(SinisterStatus.EnAttente);
 		  Sinistre sin = sr.addSinistre(s,id);
 	  return sin ;
 	  

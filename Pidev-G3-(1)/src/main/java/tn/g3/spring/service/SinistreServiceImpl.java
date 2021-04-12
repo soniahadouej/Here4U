@@ -65,7 +65,9 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 		// Long id = sinistreSaved.getPerson().getIdPerson();  
 		//Long id = (long) 1000;
 		//s.getPerson().setIdPerson(id);
+		
 		s.setPerson(p);
+		s.setStatus(SinisterStatus.EnAttente);
 		sinistreRepository.save(s); /*
 	user find by id  //recupere de la base luser connecter
 	s.setUser */
@@ -400,7 +402,7 @@ public double CreditSimulator( Long idp, Long idc) {
 	long dateFin = c.getFinishContract().getTime();
 	long dateStart = c.getStartContract().getTime();
 	long dur=dateFin-dateStart;
-	double Montant= personRepository.findBySalary(idp) *  0.8;
+	double Montant= personRepository.findBySalary(idp) *  0.8;  
 	double a = Math.pow((1+taux),-dur);
 	double mfy=Montant*(taux/(1-a));
 	return mfy ; 

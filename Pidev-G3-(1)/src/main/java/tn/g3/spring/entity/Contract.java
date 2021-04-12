@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
@@ -73,7 +75,12 @@ public class Contract implements Serializable {
 	 private Person person;
 	
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="transactionprice")
+	private List<Transaction> transactionCredit;
 	
+	
+	/* ********************************** */
 	public long getIdContract() {
 		return idContract;
 	}
