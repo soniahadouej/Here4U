@@ -54,7 +54,6 @@ public class Contract implements Serializable {
 	@Column(name="Premium")
 	private Float premiumContract;
 	
-	
 
 	/*@OneToMany(cascade = CascadeType.ALL, mappedBy="contract")
 	private Set<Sinister> sinisters;*/
