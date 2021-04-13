@@ -60,6 +60,13 @@ public class Contract implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name="Payment")
 	private ContractPaymentType paymentType;
+	
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="Currency")
+	private CurrencyContrat currency;
+	
+	private String intent;
 
 	@Column(name="Premium")
 	private Float premiumContract;
@@ -80,9 +87,44 @@ public class Contract implements Serializable {
 	private List<Transaction> transactionCredit;
 	
 	
+	
 	/* ********************************** */
+	
+	
 	public long getIdContract() {
 		return idContract;
+	}
+
+	public String getIntent() {
+		return intent;
+	}
+
+	public void setIntent(String intent) {
+		this.intent = intent;
+	}
+
+	public CurrencyContrat getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(CurrencyContrat currency) {
+		this.currency = currency;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public List<Transaction> getTransactionCredit() {
+		return transactionCredit;
+	}
+
+	public void setTransactionCredit(List<Transaction> transactionCredit) {
+		this.transactionCredit = transactionCredit;
 	}
 
 	public void setIdContract(long idContract) {

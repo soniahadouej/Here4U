@@ -1,7 +1,7 @@
 package tn.g3.spring.controller;
 
 
-import java.io.IOException; 
+import java.io.IOException;  
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.g3.spring.entity.*;
 import tn.g3.spring.repository.*;
 import tn.g3.spring.service.*;
+import tn.g3.spring.controller.*;
+
+
 
 
 
@@ -34,6 +37,10 @@ public class TransactionController {
 
 	@Autowired
 	TransactionServiceImpl transService;
+	
+
+	@Autowired
+	IContractService contract;
 
 	@Autowired
 	ContractServiceImpl cr;
@@ -46,18 +53,21 @@ public class TransactionController {
 	 */
 	@Autowired
 	PersonRepository userRepository;
+	
+	@Autowired
+	TwillioController twilioCon;
 
 
+	//http://localhost:8000/SpringMVC/servlet/transaction/all
 	@GetMapping("/all")
 	@ResponseBody
 	public List<Transaction> getTransaction (){
-
 		List<Transaction> list =  transService.retrieveAllTransactions();
 		return list;
 	}
 
 
-
+	// http://localhost:8000/SpringMVC/servlet/transaction/all/1
 	@GetMapping("/all/{id}")
 	@ResponseBody
 	public Transaction getTransaction (@PathVariable("id")int id){
@@ -65,7 +75,9 @@ public class TransactionController {
 		return t;
 
 	}
+	
 	/*
+	 * http://localhost:8000/SpringMVC/servlet/transaction/project/{name}
 	@GetMapping("/project/{name}")
 	@ResponseBody
 	public List<Project> findByProjectnameOrderByProjectdateAsc (@PathVariable("name")String name){
@@ -73,25 +85,27 @@ public class TransactionController {
 	}
 	 */
 	//Conversion
+	
 	public Date convertToDateViaSqlTimestamp(LocalDateTime dateToConvert) {
 		return java.sql.Timestamp.valueOf(dateToConvert);
 	}
 
 
 	//as an investor
-	@GetMapping("/GiveMoney/{idContract}/{nbreC}/{amount}")
+	// http://localhost:8000/SpringMVC/servlet/transaction/GiveMoney/{idContract}/{nbreC}/{amount}
+	@GetMapping("/GiveMoney/{idContract}") // /{nbreC}/{amount}")
 	@ResponseBody
-	public Boolean payWithCoupon (@PathVariable("idContract")Long idC ,@PathVariable("nbreC")int nbreC,@PathVariable("amount")float amount){
+	public Boolean payWithCoupon (@PathVariable("idContract")Long idC) { //, @PathVariable("nbreC") int nbreC,@PathVariable("amount")float amount){
+		Contract c=  contract.retrieveContract(idC);
 		Date d=convertToDateViaSqlTimestamp(LocalDateTime.now());
-		float sum=amount * nbreC;
-		Optional<Contract> ContractOptional=crr.findById(idC);
-		Contract c=ContractOptional.get();	        
-		Transaction t =new Transaction(d,sum,TransType.debit);
+		//float sum=amount * nbreC;
+		        
+		Transaction t =new Transaction(d ,c.getPaymentType().toString());
 		t.setTransactionprice(c);
-		t.setNbreC(nbreC);
-		t. setAmountC(amount);
+ 		t.setNbreC(0);
+		t. setAmountC(c.getPremiumContract());
 		transService.addTransaction(t);
-		//twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
+		//twilioCon.sendotp("+21626233576");
 		return true;
 	}
 

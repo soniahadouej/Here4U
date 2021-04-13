@@ -1,5 +1,6 @@
 package tn.g3.spring.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,9 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class Transaction {
+public class Transaction implements Serializable {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="transactionID")
@@ -28,135 +29,98 @@ public class Transaction {
 
 	private float transactionAmount;
 	
-	@Enumerated(EnumType.STRING)
-	private TransType transactionType;
+	/*@Enumerated(EnumType.STRING)
+	private TransType transactionType;*/
+	private String transactionType;
 	
-	  private int nbreC;
-	  private float amountC;
-	    
+	
+	
 	
     @ManyToOne
     @JoinColumn(name = "idcontract",referencedColumnName="Id")
 	@JsonIgnore
     private Contract transactionprice;
 
-
-	public int getTransactionid() {
-		return transactionid;
-	}
-
-
-	public void setTransactionid(int transactionid) {
-		this.transactionid = transactionid;
-	}
-
-
-	public Date getTransactionDate() {
-		return transactionDate;
-	}
-
-
-	public void setTransactionDate(Date transactionDate) {
-		this.transactionDate = transactionDate;
-	}
-
-
-	public float getTransactionAmount() {
-		return transactionAmount;
-	}
-
-
-	public void setTransactionAmount(float transactionAmount) {
-		this.transactionAmount = transactionAmount;
-	}
-
-
-	public TransType getTransactionType() {
-		return transactionType;
-	}
-
-
-	public void setTransactionType(TransType transactionType) {
-		this.transactionType = transactionType;
-	}
-
-
+    private int nbreC;
+    private float amountC;
+    
+    
 	public int getNbreC() {
 		return nbreC;
 	}
-
 
 	public void setNbreC(int nbreC) {
 		this.nbreC = nbreC;
 	}
 
-
 	public float getAmountC() {
 		return amountC;
 	}
-
 
 	public void setAmountC(float amountC) {
 		this.amountC = amountC;
 	}
 
 
+
+	 
+
+	public Transaction() {
+		super();
+	}
+
+	
+
+	public int getTransactionid() {
+		return transactionid;
+	}
+
+	public void setTransactionid(int transactionid) {
+		this.transactionid = transactionid;
+	}
+
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+	public float getTransactionAmount() {
+		return transactionAmount;
+	}
+
+	public void setTransactionAmount(float transactionAmount) {
+		this.transactionAmount = transactionAmount;
+	}
+
+	 
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
+
 	public Contract getTransactionprice() {
 		return transactionprice;
 	}
-
 
 	public void setTransactionprice(Contract transactionprice) {
 		this.transactionprice = transactionprice;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Transaction [transactionid=" + transactionid + ", transactionDate=" + transactionDate
-				+ ", transactionAmount=" + transactionAmount + ", transactionType=" + transactionType + ", nbreC="
-				+ nbreC + ", amountC=" + amountC + ", transactionprice=" + transactionprice + "]";
-	}
-
-
-	public Transaction(int transactionid, Date transactionDate, float transactionAmount, TransType transactionType,
-			int nbreC, float amountC, Contract transactionprice) {
-		super();
-		this.transactionid = transactionid;
-		this.transactionDate = transactionDate;
-		this.transactionAmount = transactionAmount;
-		this.transactionType = transactionType;
-		this.nbreC = nbreC;
-		this.amountC = amountC;
-		this.transactionprice = transactionprice;
-	}
-
-
-	public Transaction(Date transactionDate, float transactionAmount, TransType transactionType, int nbreC,
-			float amountC, Contract transactionprice) {
+	public Transaction(Date transactionDate, String transactionType) {
 		super();
 		this.transactionDate = transactionDate;
-		this.transactionAmount = transactionAmount;
-		this.transactionType = transactionType;
-		this.nbreC = nbreC;
-		this.amountC = amountC;
-		this.transactionprice = transactionprice;
-	}
-
-
-	public Transaction(Date transactionDate, float transactionAmount, TransType transactionType) {
-		super();
-		this.transactionDate = transactionDate;
-		this.transactionAmount = transactionAmount;
 		this.transactionType = transactionType;
 	}
 
 
-	public Transaction() {
-		super();
-	}
-    
-    
-    
 
+
+	
 }
