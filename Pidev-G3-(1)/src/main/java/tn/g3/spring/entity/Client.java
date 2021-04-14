@@ -60,5 +60,9 @@ public class Client extends Person implements Serializable {
 		this.cin=cin;this.category=category;this.job=job;this.salary=salary;this.login=login;this.password=password;this.email=email;this.nbWarning=nbWarning;this.startDate=startDate;
 		
 	}
+	public Client(Integer cin) {
+		super();
+		this.cin = cin;
+	}
 	
 }

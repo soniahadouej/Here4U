@@ -27,7 +27,7 @@ public abstract class Person implements Serializable {
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	@Column(name="Id")
-	protected long idPerson;
+	protected Long idPerson;
 	
 	@Column(name="Type",insertable=false,updatable=false )
 	protected String personType;
@@ -91,5 +91,62 @@ public abstract class Person implements Serializable {
 	public Person(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress){
 		this.idPerson=idPerson;this.personType=personType;this.firstName=firstName;this.lastName=lastName;this.phoneNumber=phoneNumber;this.age=age;this.sex=sex;this.adress=adress;
 		
+	}
+	public Person(long idPerson, String personType, String firstName, String lastName, Integer age, PersonSex sex) {
+		super();
+		this.idPerson = idPerson;
+		this.personType = personType;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.sex = sex;
+	}
+	public Long getIdPerson() {
+		return idPerson;
+	}
+	public void setIdPerson(Long idPerson) {
+		this.idPerson = idPerson;
+	}
+	public String getPersonType() {
+		return personType;
+	}
+	public void setPersonType(String personType) {
+		this.personType = personType;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Integer getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(Integer phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	public PersonSex getSex() {
+		return sex;
+	}
+	public void setSex(PersonSex sex) {
+		this.sex = sex;
+	}
+	public Adress getAdress() {
+		return adress;
+	}
+	public void setAdress(Adress adress) {
+		this.adress = adress;
 	}
 }

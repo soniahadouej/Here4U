@@ -99,12 +99,28 @@ public class Offer implements Serializable {
 		this.maxRedemption = maxRedemption;
 	}
 
-	public Agent getAgent() {
-		return agent;
+
+	public Offer(long idOffer, String descriptionOffer, String nameOffer,Integer maxRedemption) {
+		super();
+		this.idOffer = idOffer;
+		this.descriptionOffer = descriptionOffer;
+		this.nameOffer = nameOffer;
+		this.maxRedemption = maxRedemption;
 	}
 
-	public void setAgent(Agent agent) {
-		this.agent = agent;
+	public Offer() {
+		super();
+	}
+
+	public Offer(long idOffer, OfferType typeOffer, String descriptionOffer, String nameOffer, String codeOffer,
+			Integer maxRedemption) {
+		super();
+		this.idOffer = idOffer;
+		this.typeOffer = typeOffer;
+		this.descriptionOffer = descriptionOffer;
+		this.nameOffer = nameOffer;
+		this.codeOffer = codeOffer;
+		this.maxRedemption = maxRedemption;
 	}
 
 	public List<ContractOffer> getContractOffers() {
@@ -114,87 +130,6 @@ public class Offer implements Serializable {
 	public void setContractOffers(List<ContractOffer> contractOffers) {
 		this.contractOffers = contractOffers;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeOffer == null) ? 0 : codeOffer.hashCode());
-		result = prime * result + ((contractOffers == null) ? 0 : contractOffers.hashCode());
-		result = prime * result + ((descriptionOffer == null) ? 0 : descriptionOffer.hashCode());
-		result = prime * result + (int) (idOffer ^ (idOffer >>> 32));
-		result = prime * result + ((maxRedemption == null) ? 0 : maxRedemption.hashCode());
-		result = prime * result + ((nameOffer == null) ? 0 : nameOffer.hashCode());
-		result = prime * result + ((typeOffer == null) ? 0 : typeOffer.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Offer other = (Offer) obj;
-		if (codeOffer == null) {
-			if (other.codeOffer != null)
-				return false;
-		} else if (!codeOffer.equals(other.codeOffer))
-			return false;
-		if (contractOffers == null) {
-			if (other.contractOffers != null)
-				return false;
-		} else if (!contractOffers.equals(other.contractOffers))
-			return false;
-		if (descriptionOffer == null) {
-			if (other.descriptionOffer != null)
-				return false;
-		} else if (!descriptionOffer.equals(other.descriptionOffer))
-			return false;
-		if (idOffer != other.idOffer)
-			return false;
-		if (maxRedemption == null) {
-			if (other.maxRedemption != null)
-				return false;
-		} else if (!maxRedemption.equals(other.maxRedemption))
-			return false;
-		if (nameOffer == null) {
-			if (other.nameOffer != null)
-				return false;
-		} else if (!nameOffer.equals(other.nameOffer))
-			return false;
-		if (typeOffer != other.typeOffer)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Offer [idOffer=" + idOffer + ", typeOffer=" + typeOffer + ", descriptionOffer=" + descriptionOffer
-				+ ", nameOffer=" + nameOffer + ", codeOffer=" + codeOffer + ", maxRedemption=" + maxRedemption
-				+ ", contractOffers=" + contractOffers + "]";
-	}
-
-	public Offer(long idOffer, OfferType typeOffer, String descriptionOffer, String nameOffer, String codeOffer,
-			Integer maxRedemption, Agent agent, List<ContractOffer> contractOffers) {
-		super();
-		this.idOffer = idOffer;
-		this.typeOffer = typeOffer;
-		this.descriptionOffer = descriptionOffer;
-		this.nameOffer = nameOffer;
-		this.codeOffer = codeOffer;
-		this.maxRedemption = maxRedemption;
-		this.agent = agent;
-		this.contractOffers = contractOffers;
-	}
-
-	public Offer() {
-		super();
-	}
-
-
 
 	
 }

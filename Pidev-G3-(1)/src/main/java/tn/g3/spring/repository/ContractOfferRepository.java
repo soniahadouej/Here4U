@@ -1,28 +1,43 @@
 package tn.g3.spring.repository;
+import java.util.Date;
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import tn.g3.spring.entity.Contract;
 import tn.g3.spring.entity.ContractOffer;
 import tn.g3.spring.entity.ContractOfferPK;
+import tn.g3.spring.entity.Offer;
 import tn.g3.spring.entity.OfferStatus;
 
 @Repository
-public interface ContractOfferRepository extends JpaRepository<ContractOffer, Long> {
+public interface ContractOfferRepository extends JpaRepository<ContractOffer, ContractOfferPK > {
 	
-	/*@Query("SELECT o FROM ContractOffer o WHERE cast(o.startOffer as string) like %:date%" )
-	List<ContractOffer> findByStartDate( @Param("date") String start);
+	@Query("select DISTINCT o from Offer o join o.contractOffers co join co.contract c where c.idContract= ?1 ")
+	public List<Offer> findAllOffersByContract(Long idc);
+	
+	@Query("select DISTINCT c from Contract c join c.contractOffers co join co.offer o where o.idOffer= ?1")
+    public List<Contract> findAllContractsByOffer(Long ido);
+	
+	@Query("SELECT c FROM Contract c join c.contractOffers co WHERE co.statusOffer= ?1" )
+	public List<Contract> findContractByOfferStatus(OfferStatus status);
+	
+	@Query("Select c from Contract c join c.contractOffers co where co.contractOfferPK.startOffer = ?1 and co.expireOffer = ?2")
+	public List<Contract> getContractByOfferDate(Date startOffer,Date expireOffer);
+
+	@Query("SELECT o FROM Offer o join o.contractOffers co WHERE co.contractOfferPK.startOffer = ?1" )
+	public List<Offer> findOfferByStartDate( Date startOffer);
 		
-	@Query("SELECT o FROM ContractOffer o WHERE cast(o.expireOffer as string) like %:date% " )
-	List<ContractOffer> findByExpiringDate( @Param("date") String expire);*/
+	@Query("SELECT o FROM Offer o join o.contractOffers co WHERE co.expireOffer = ?1" )
+	public List<Offer> findOfferByExpiringDate( Date expireOffer);
 	
-	@Query("SELECT co FROM ContractOffer co WHERE co.statusOffer= ?1" )
-	List<ContractOffer> findByStatus(OfferStatus status);
+	@Query("SELECT count(*) FROM Offer o join o.contractOffers co where co.statusOffer= 'Active' ")
+    public int countActiveOffers();
+
+	@Query("SELECT count(*) FROM Offer o join o.contractOffers co where co.statusOffer= 'Stopped' ")
+	public int countStoppedOffers();
+
 	
-	@Query("select co from ContractOffer co where  co.contractOfferPK.idContract = ?1 ")  
-	List<ContractOffer> findAllOffersByContract(ContractOfferPK coPK); 
 	
-	@Query("select co from ContractOffer co where  co.contractOfferPK.idOffer = ?1 ")  
-	List<ContractOffer> findAllContractsByOffer(ContractOfferPK coPK); 
 }

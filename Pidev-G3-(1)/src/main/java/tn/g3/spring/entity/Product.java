@@ -64,11 +64,48 @@ public abstract class Product implements Serializable {
 	
 	@ManyToOne
 	Agent agent;
-	
-	public Product(){}
-	public Product(Long idProduct,String productType,String descriptionProduct,Date startProduct,Date finishProduct,ProductStatus statusProduct,String feedback,String nameProduct){
-		this.idProduct=idProduct;this.productType=productType;this.descriptionProduct=descriptionProduct;this.startProduct=startProduct;this.finishProduct=finishProduct;this.statusProduct=statusProduct;this.feedback=feedback;this.nameProduct=nameProduct;
-		
+
+	public Product(long idProduct, String productType, String descriptionProduct, Date startProduct, Date finishProduct,
+			ProductStatus statusProduct, String feedback, String nameProduct) {
+		super();
+		this.idProduct = idProduct;
+		this.productType = productType;
+		this.descriptionProduct = descriptionProduct;
+		this.startProduct = startProduct;
+		this.finishProduct = finishProduct;
+		this.statusProduct = statusProduct;
+		this.feedback = feedback;
+		this.nameProduct = nameProduct;
 	}
+
+	public Product() {
+		super();
+	}
+
+	public Product(String productType, String descriptionProduct, Date startProduct, Date finishProduct,
+			ProductStatus statusProduct, String feedback, String nameProduct, Agent agent) {
+		super();
+		this.productType = productType;
+		this.descriptionProduct = descriptionProduct;
+		this.startProduct = startProduct;
+		this.finishProduct = finishProduct;
+		this.statusProduct = statusProduct;
+		this.feedback = feedback;
+		this.nameProduct = nameProduct;
+		this.agent = agent;
+	}
+
+	public Product(long idProduct, String productType, String descriptionProduct, ProductStatus statusProduct,
+			String nameProduct) {
+		super();
+		this.idProduct = idProduct;
+		this.productType = productType;
+		this.descriptionProduct = descriptionProduct;
+		this.statusProduct = statusProduct;
+		this.nameProduct = nameProduct;
+	}
+	
+	
+	
 
 }

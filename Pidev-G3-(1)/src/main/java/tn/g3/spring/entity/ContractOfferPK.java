@@ -11,9 +11,10 @@ import javax.persistence.TemporalType;
 public class ContractOfferPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Column(name="IdContract")
 	private long idContract;
+	
 	
 	@Column(name="IdOffer")
 	private long idOffer;
@@ -45,6 +46,7 @@ public class ContractOfferPK implements Serializable {
 	public void setStartOffer(Date startOffer) {
 		this.startOffer = startOffer;
 	}
+	
 
 	@Override
 	public int hashCode() {
