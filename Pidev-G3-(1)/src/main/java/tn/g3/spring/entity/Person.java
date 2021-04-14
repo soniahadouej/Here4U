@@ -60,6 +60,14 @@ public abstract class Person implements Serializable {
 
 	
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public long getIdPerson() {
 		return idPerson;
 	}
@@ -150,8 +158,19 @@ public abstract class Person implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "Sex")
 	protected PersonSex sex;
+	
+	
+	private String email;
 
-/*@Embedded
+public Set<Contract> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(Set<Contract> contracts) {
+		this.contracts = contracts;
+	}
+
+	/*@Embedded
 	@Column(name = "Adress")
 	protected Adress adress;
 */

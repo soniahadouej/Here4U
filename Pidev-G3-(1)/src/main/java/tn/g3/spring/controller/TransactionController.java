@@ -13,6 +13,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +49,8 @@ public class TransactionController {
 
 	@Autowired
 	ContractRepository crr;
+	@Autowired
+	   private Smsservice smsservice;
 
 	/*@Autowired
 	ProjectRepository  projectRepository;
@@ -54,8 +58,8 @@ public class TransactionController {
 	@Autowired
 	PersonRepository userRepository;
 	
-	@Autowired
-	TwillioController twilioCon;
+	/*@Autowired
+	TwillioController twilioCon;*
 
 
 	//http://localhost:8000/SpringMVC/servlet/transaction/all
@@ -92,21 +96,6 @@ public class TransactionController {
 
 
 	//as an investor
-	// http://localhost:8000/SpringMVC/servlet/transaction/GiveMoney/{idContract}/{nbreC}/{amount}
-	@GetMapping("/GiveMoney/{idContract}") // /{nbreC}/{amount}")
-	@ResponseBody
-	public Boolean payWithCoupon (@PathVariable("idContract")Long idC) { //, @PathVariable("nbreC") int nbreC,@PathVariable("amount")float amount){
-		Contract c=  contract.retrieveContract(idC);
-		Date d=convertToDateViaSqlTimestamp(LocalDateTime.now());
-		//float sum=amount * nbreC;
-		        
-		Transaction t =new Transaction(d ,c.getPaymentType().toString());
-		t.setTransactionprice(c);
- 		t.setNbreC(0);
-		t. setAmountC(c.getPremiumContract());
-		transService.addTransaction(t);
-		//twilioCon.sendotp("+21626233576");
-		return true;
-	}
+	
 
 }

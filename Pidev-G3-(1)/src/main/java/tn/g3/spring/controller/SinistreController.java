@@ -82,11 +82,17 @@ public class SinistreController {
 		   }
 		   
 		  
-		   // http://localhost:8000/SpringMVC/servlet/modify-sinistre
-		   @PutMapping("/modify-sinistre/{sinistre-id")
+		   // http://localhost:8000/SpringMVC/servlet/modify-sinistre/id
+		  /* {      "idSinistre": 5,
+			    "typeSinistre": "DécesVieEntiere",  "RachatTotalVieEntiere" "RachatPartielVieEntiere"
+			    "description": "Description detkkkkkkkkkkkkkkkkkkkkkkkkkkkkkinistre",
+			    "dateOccurence": "2010-03-22",
+			    "status": "EnAttente",
+			    "documents": null } */
+		   @PutMapping("/modify-sinistre/{sinistre-id}")
 		    @ResponseBody
-		    public Sinistre modifySinistre(@PathVariable("sinistre-id") Sinistre sinId){
-		    return sr.updateSinistre(sinId);
+		    public Sinistre modifySinistre(@RequestBody Sinistre s, @PathVariable("sinistre-id") Sinistre sinId){
+		    return sr.updateSinistre(s);
 		   }
 		   
 		   
@@ -130,7 +136,7 @@ public class SinistreController {
 				{double taux = 0.0624 ; 
 			     double res=0;
 			   
-			   //RECUPERER LES SINISTRE EN ATTENTE
+			   //RECUPERER LES SINISTRE En_Cours
 			   if (sr.FindByIdSin(idSin).getPerson().getSex().toString().equals("Female") ){  //cas Female
 			   	if ( sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("DécesVieEntiere") )
 						{

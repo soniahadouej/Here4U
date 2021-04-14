@@ -29,17 +29,6 @@ public class SendEmailService {
 		javaMailSender.send(simpleMailMessage);
 		System.out.println("sent email"); */
 
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-		
-		mimeMessageHelper.setFrom("sonia.hadouej@esprit.tn");
-		mimeMessageHelper.setTo(to);
-		mimeMessageHelper.setSubject(topic);
-		mimeMessageHelper.setText(body,true);
-		mimeMessageHelper.setSentDate(new Date());
-		mimeMessageHelper.addAttachment(file.getName(), file);
-		javaMailSender.send(mimeMessage);
-		System.out.println("sent email"); 
 
 	}
 	

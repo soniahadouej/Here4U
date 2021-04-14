@@ -192,24 +192,6 @@ public class SinistreServiceImpl implements ISinistreSerivce{
 	}	
 	///// ************************* MAIL
 
-	@Override
-	public void SendMail() {
-		try {
-			List<Sinistre> sinstreRej = sinistreRepository.findByStatusRejetée();
-
-			//SimpleMailMessage mail = new SimpleMailMessage();
-			for(int i=0;i< sinstreRej.size();i++)
-			{   // String email = sinstreRej.get(i).getClient().getEmail();
-				//nom=  String email = sinstreRej.get(i).getClient().getNom();
-				String motif =sinstreRej.get(i).getMotifStatus().toString(); 
-				String date =sinstreRej.get(i).getDateOccurence().toString(); 
-
-				sendEmailService.sendEmail("hadouejnadia@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
-						+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
-			} 
-		} 
-		catch (Exception e)
-		{System.out.println(e.getMessage());}
 	}
 
 	/* *********************VIE ENTIERE  ********************** */
@@ -397,6 +379,7 @@ public double CreditSimulator( Long idp, Long idc) {
 
 	double taux = 0.062;
 	Person u= personRepository.findById(idp).get();
+	//Contract c= u.getContracts().;
 	Contract  c =cr.findById(idc).get();
 	//Long id=(Long)session.getAttribute("name");	 
 	long dateFin = c.getFinishContract().getTime();
