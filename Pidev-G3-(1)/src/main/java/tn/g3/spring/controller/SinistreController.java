@@ -125,50 +125,7 @@ public class SinistreController {
 			}
 
 		   
-		   ///////////////////////////// CACUL VIE ENTIERE////////////////////////
-		   // http://localhost:8000/SpringMVC/servlet/CalculVieEntiere/{prime}/{ageClient}/{AgeMax}/{idSin}
-		   // http://localhost:8000/SpringMVC/servlet/CalculVieEntiere/30.354326/30/36/21
-		   @GetMapping("/CalculVieEntiere/{prime}/{ageClient}/{AgeMax}/{idSin}")
-		   @ResponseBody
-		   public double testCalculFinal(@PathVariable(value = "prime") double prime, @PathVariable(value = "ageClient")int ageClient,
-			   @PathVariable(value = "AgeMax") int AgeMax, @PathVariable(value = "idSin") Long idSin)
 		   
-				{double taux = 0.0624 ; 
-			     double res=0;
-			   
-			   //RECUPERER LES SINISTRE En_Cours
-			   if (sr.FindByIdSin(idSin).getPerson().getSex().toString().equals("Female") ){  //cas Female
-			   	if ( sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("DécesVieEntiere") )
-						{
-			   		
-			   		// if 
-					 res = sr.calculCapitalfemme(prime ,ageClient, AgeMax, taux);
-					 // else prime périodique
-					 //res = sr.calculCapitalfemmePPer(prime ,ageClient, AgeMax, taux);
-					 
-						}
-				else if (sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("RachatTotalVieEntiere") ) // 1 seul cas de prime 
-				{
-					res = sr.calculCapitalAV(prime, ageClient, AgeMax, taux);
-				} 
-			   }
-			    
-			    else  
-			    {
-			    	if ( sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("DécesVieEntiere") )
-					{
-				 res = sr.calculCapitalHomme(prime ,ageClient, AgeMax, taux);
-					}
-			    	else if (sr.FindByIdSin(idSin).getTypeSinistre().toString().equals("RachatTotalVieEntiere") )
-					{
-			    		res = sr.calculCapitalAV(prime, ageClient, AgeMax, taux);
-					} 
-			    }
-			    return res;	
-			   
-				
-			}
-		  
 		   
 		   ///////////////////////CREDI SIMULATOR
 		   
