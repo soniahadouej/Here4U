@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.g3.spring.entity.Contract;
+import tn.g3.spring.entity.ProductType;
 import tn.g3.spring.service.IContractService;
 
 
@@ -61,6 +62,44 @@ public class Contractcontroller {
 		public Contract updateContract(@RequestBody Contract contract) {
 		return cs.updateContract(contract);
 		}
-
-
+		 @GetMapping("/calculprimevief/{cap}/{age}/{agem}/{taux}")
+		  @ResponseBody
+		  public float calculPrimevief( @PathVariable("cap") float capital , @PathVariable("age")int ageClient,@PathVariable("agem") int AgeMax,@PathVariable("taux") double taux  )  {
+				float k = 0 ;
+				k =(float) cs.calculPrimefemme(capital, ageClient,AgeMax,taux) ; 
+				return k ;
+	
+}
+		 @GetMapping("/calculprimevieh/{cap}/{age}/{agem}/{taux}")
+		  @ResponseBody
+		  public float calculPrimevieh( @PathVariable("cap") float capital , @PathVariable("age")int ageClient,@PathVariable("agem") int AgeMax,@PathVariable("taux") double taux  )  {
+				float k = 0 ;
+				k =(float) cs.calculPrimeHomme(capital, ageClient,AgeMax,taux) ; 
+				return k ;
+	
+}
+		 @GetMapping("/calculprimerente/{rente}/{age}/{agem}/{taux}")
+		  @ResponseBody
+		  public float calculPrimerente( @PathVariable("rente") float rente , @PathVariable("age")int ageClient,@PathVariable("agem") int nombreanne,@PathVariable("taux") double taux  )  {
+				float k = 0 ;
+				k =(float) cs.calculPrimerentehomme(rente, ageClient,nombreanne,taux) ; 
+				return k ;
+	
+}
+		 @GetMapping("/calculprimerentef/{rente}/{age}/{agem}/{taux}")
+		  @ResponseBody
+		  public float calculPrimerentef( @PathVariable("rente") float rente , @PathVariable("age")int ageClient,@PathVariable("agem") int nombreanne,@PathVariable("taux") double taux  )  {
+				float k = 0 ;
+				k =(float) cs.calculPrimerentefemme(rente, ageClient,nombreanne,taux) ; 
+				return k ; 
+	
+}
+		 @GetMapping("/calculprimeauto/{sinistre}/{product}")
+		  @ResponseBody
+		  public float calculprimeauto( @PathVariable("sinistre")float sinistre ,@PathVariable("product") ProductType producttype)  {
+				float k ;
+				k =(float) cs.calculPrimeAuto(sinistre,producttype) ;
+				return k ; 
+		 }
+		 
 }
