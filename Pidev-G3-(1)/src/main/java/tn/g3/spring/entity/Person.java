@@ -20,13 +20,13 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="Type")
 @Table(name="Person")
-public abstract class Person implements Serializable {
+public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	@Column(name="Id")
+	@Column(name="IdPerson")
 	protected Long idPerson;
 	
 	@Column(name="Type",insertable=false,updatable=false )
@@ -147,6 +147,17 @@ public abstract class Person implements Serializable {
 		return adress;
 	}
 	public void setAdress(Adress adress) {
+		this.adress = adress;
+	}
+	public Person(String personType, String firstName, String lastName, Integer phoneNumber, Integer age, PersonSex sex,
+			Adress adress) {
+		super();
+		this.personType = personType;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.age = age;
+		this.sex = sex;
 		this.adress = adress;
 	}
 }

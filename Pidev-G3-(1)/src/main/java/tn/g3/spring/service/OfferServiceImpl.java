@@ -1,17 +1,15 @@
 package tn.g3.spring.service;
-import java.util.Date;
+
 import java.util.List; 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.g3.spring.repository.OfferRepository;
-import tn.g3.spring.entity.CivilStatus;
-import tn.g3.spring.entity.Contract;
 import tn.g3.spring.entity.Offer;
+import tn.g3.spring.entity.OfferCodeGenerator;
 import tn.g3.spring.entity.OfferType;
-import tn.g3.spring.entity.ProductType;
-import tn.g3.spring.entity.SinisterType;
+
 
 @Service 
 public class OfferServiceImpl implements IOfferService {
@@ -32,8 +30,10 @@ public class OfferServiceImpl implements IOfferService {
 
 	@Override
 	public Offer addOffer(Offer o) {
-		return offerRepository.save(o) ;
-	}
+			String code = OfferCodeGenerator.generateCodeOffer();
+			o.setCodeOffer(code);
+			return offerRepository.save(o);
+		}
 
 	@Override
 	public void deleteOffer(String id) {
@@ -91,23 +91,6 @@ public class OfferServiceImpl implements IOfferService {
 	}
 
 
-	@Override
-	public float calculateGift(Contract c, int age, CivilStatus category, float salary, Date startdate) {
-		
-		return 0;
-	}
-
-	@Override
-	public float calculateDiscount(Contract c, Date startContract, int nbrSinistre, SinisterType typeSinistre,ProductType productType) {
-		
-		return 0;
-	}
-
-	@Override
-	public float calculateLoyalty(Contract c,Date startContract, Date finishContract, int nbrPoints) {
-		
-		return 0;
-	}
 
 	}
 

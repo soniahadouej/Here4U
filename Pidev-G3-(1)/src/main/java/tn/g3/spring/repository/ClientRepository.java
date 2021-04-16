@@ -3,9 +3,9 @@ package tn.g3.spring.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import tn.g3.spring.entity.Person;
+import tn.g3.spring.entity.Client;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface ClientRepository extends JpaRepository<Client, Long> {
 
 }

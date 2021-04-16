@@ -18,11 +18,13 @@ public interface IContractOfferService {
 	List<Contract> getContractsByOfferDate(Date startOffer,Date expireOffer);
 	
 	void addContractOffer(Long idc, Long ido, Date startOffer, Date expireOffer, OfferStatus statusOffer);
-	public int countActiveOffers();
-	public int countStoppedOffers();
+	int countActiveOffers();
+	int countStoppedOffers();
 	ContractOffer getContractOfferPK(ContractOfferPK copk);
-	public String activateContactOffer (ContractOfferPK copk);
-    public String desactivateContractOffer (ContractOfferPK copk);
+	String activateContactOffer (ContractOfferPK copk);
+    String desactivateContractOffer (ContractOfferPK copk);
+    List<Offer> ShowOffersHistory();
+    
 	
 	
 	

@@ -14,50 +14,44 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="Type")
 @Table(name="Product")
-public abstract class Product implements Serializable {
+public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	@Column(name="Id")
-	protected long idProduct;
+	@Column(name="IdProduct")
+	private long idProduct;
 	
-	@Column(name="Type",insertable=false,updatable=false)
-	protected String productType;
+	@Enumerated(EnumType.STRING)
+	@Column(name="Type")
+	private ProductType productType;
 
 	@Column(name="Description")
-	protected String descriptionProduct;
+	private String descriptionProduct;
 
 	@Temporal (TemporalType.DATE)
 	@Column(name="Start")
-	protected Date startProduct;
+	private Date startProduct;
 
 	@Temporal (TemporalType.DATE)
 	@Column(name="Expire")
-	protected Date finishProduct;
+	private Date finishProduct;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="ProductStatus")
-	protected ProductStatus statusProduct;
+	private ProductStatus statusProduct;
 	
 	@Column(name="Feedback")
-	protected String feedback;
+	private String feedback;
 
 	@Column(name="Name")
-	protected String nameProduct;
+	private String nameProduct;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="product")
 	private Set<Contract> contracts;
@@ -65,25 +59,93 @@ public abstract class Product implements Serializable {
 	@ManyToOne
 	Agent agent;
 
-	public Product(long idProduct, String productType, String descriptionProduct, Date startProduct, Date finishProduct,
-			ProductStatus statusProduct, String feedback, String nameProduct) {
-		super();
+	public long getIdProduct() {
+		return idProduct;
+	}
+
+	public void setIdProduct(long idProduct) {
 		this.idProduct = idProduct;
+	}
+
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
 		this.productType = productType;
+	}
+
+	public String getDescriptionProduct() {
+		return descriptionProduct;
+	}
+
+	public void setDescriptionProduct(String descriptionProduct) {
 		this.descriptionProduct = descriptionProduct;
+	}
+
+	public Date getStartProduct() {
+		return startProduct;
+	}
+
+	public void setStartProduct(Date startProduct) {
 		this.startProduct = startProduct;
+	}
+
+	public Date getFinishProduct() {
+		return finishProduct;
+	}
+
+	public void setFinishProduct(Date finishProduct) {
 		this.finishProduct = finishProduct;
+	}
+
+	public ProductStatus getStatusProduct() {
+		return statusProduct;
+	}
+
+	public void setStatusProduct(ProductStatus statusProduct) {
 		this.statusProduct = statusProduct;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	}
+
+	public String getNameProduct() {
+		return nameProduct;
+	}
+
+	public void setNameProduct(String nameProduct) {
 		this.nameProduct = nameProduct;
+	}
+
+	public Agent getAgent() {
+		return agent;
 	}
 
 	public Product() {
 		super();
 	}
 
-	public Product(String productType, String descriptionProduct, Date startProduct, Date finishProduct,
-			ProductStatus statusProduct, String feedback, String nameProduct, Agent agent) {
+	public Product(long idProduct, ProductType productType, String descriptionProduct, Date startProduct,
+			Date finishProduct, ProductStatus statusProduct, String feedback, String nameProduct) {
+		super();
+		this.idProduct = idProduct;
+		this.productType = productType;
+		this.descriptionProduct = descriptionProduct;
+		this.startProduct = startProduct;
+		this.finishProduct = finishProduct;
+		this.statusProduct = statusProduct;
+		this.feedback = feedback;
+		this.nameProduct = nameProduct;
+	}
+
+	public Product(ProductType productType, String descriptionProduct, Date startProduct, Date finishProduct,
+			ProductStatus statusProduct, String feedback, String nameProduct) {
 		super();
 		this.productType = productType;
 		this.descriptionProduct = descriptionProduct;
@@ -92,18 +154,8 @@ public abstract class Product implements Serializable {
 		this.statusProduct = statusProduct;
 		this.feedback = feedback;
 		this.nameProduct = nameProduct;
-		this.agent = agent;
-	}
+	} 
 
-	public Product(long idProduct, String productType, String descriptionProduct, ProductStatus statusProduct,
-			String nameProduct) {
-		super();
-		this.idProduct = idProduct;
-		this.productType = productType;
-		this.descriptionProduct = descriptionProduct;
-		this.statusProduct = statusProduct;
-		this.nameProduct = nameProduct;
-	}
 	
 	
 	

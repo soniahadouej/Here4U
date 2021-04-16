@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tn.g3.spring.entity.Contract;
 import tn.g3.spring.entity.ContractOffer;
@@ -16,7 +17,7 @@ import tn.g3.spring.entity.OfferStatus;
 import tn.g3.spring.repository.ContractOfferRepository;
 import tn.g3.spring.repository.ContractRepository;
 import tn.g3.spring.repository.OfferRepository;
-import tn.g3.spring.repository.PersonRepository;
+import tn.g3.spring.repository.ClientRepository;
 @Service
 public class ContractOfferServiceImpl implements IContractOfferService{
 
@@ -30,9 +31,9 @@ public class ContractOfferServiceImpl implements IContractOfferService{
 	ContractRepository contractRepository;
 	
 	@Autowired
-	PersonRepository personRepository;
+	ClientRepository personRepository;
 	
-	private static final Logger L= LogManager.getLogger(OfferServiceImpl.class);
+	private static final Logger L= LogManager.getLogger(ContractOfferServiceImpl.class);
 	
 	
 	@Override
@@ -145,6 +146,13 @@ public class ContractOfferServiceImpl implements IContractOfferService{
 		else 
 			return "already desactivated ";
 		
+	}
+	
+	@Transactional
+	@Override
+	public List<Offer> ShowOffersHistory() {
+		 List <Offer> expiredOffers = (List<Offer>) contractOfferRepository.getExpiredOffers();
+		return expiredOffers;
 	}
 
 	

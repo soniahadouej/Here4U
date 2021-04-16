@@ -30,7 +30,7 @@ public class Agent extends Person implements Serializable {
 	
 	@Temporal (TemporalType.DATE)
 	@Column(name="Start")
-	private Date hiringDate;
+	private Date start;
 	
 	@Column(name="Salary_TND")
 	private Float salary;
@@ -57,9 +57,9 @@ public class Agent extends Person implements Serializable {
 	private Set<Offer> offers;
 	
 	public Agent(){}
-	public Agent(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress,Integer cin,GradeType typeGrade,Date hiringDate,Float salary,Integer delay,Integer warning,String login,String password,String email){
+	public Agent(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress,Integer cin,GradeType typeGrade,Date start,Float salary,Integer delay,Integer warning,String login,String password,String email){
 		super(idPerson,personType,firstName,lastName,phoneNumber,age,sex,adress);
-		this.cin=cin;this.typeGrade=typeGrade;this.hiringDate=hiringDate;this.salary=salary;this.delay=delay;this.warning=warning;this.login=login;this.password=password;this.email=email;
+		this.cin=cin;this.typeGrade=typeGrade;this.start=start;this.salary=salary;this.delay=delay;this.warning=warning;this.login=login;this.password=password;this.email=email;
 		
 	}
 	

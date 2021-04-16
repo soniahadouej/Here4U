@@ -45,7 +45,7 @@ public class Client extends Person implements Serializable {
 	private String email;
 	
 	@Column(name="Warning")
-	private Integer nbWarning;
+	private Integer warning;
 	
 	@Temporal (TemporalType.DATE)
 	@Column(name="Start")
@@ -53,16 +53,37 @@ public class Client extends Person implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private Set<Contract> contracts;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
+	private Set<Sinistre> sinistres;
 
 	public Client(){}
-	public Client(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress,Integer cin,CivilStatus category,String job,Float salary,String login,String password,String email,Integer nbWarning,Date startDate){
+	public Client(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress,Integer cin,CivilStatus category,String job,Float salary,String login,String password,String email,Integer warning,Date startDate){
 		super(idPerson,personType,firstName,lastName,phoneNumber,age,sex,adress);
-		this.cin=cin;this.category=category;this.job=job;this.salary=salary;this.login=login;this.password=password;this.email=email;this.nbWarning=nbWarning;this.startDate=startDate;
+		this.cin=cin;this.category=category;this.job=job;this.salary=salary;this.login=login;this.password=password;this.email=email;this.warning=warning;this.startDate=startDate;
 		
 	}
 	public Client(Integer cin) {
 		super();
 		this.cin = cin;
+	}
+	public CivilStatus getCategory() {
+		return category;
+	}
+	public void setCategory(CivilStatus category) {
+		this.category = category;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	
 }

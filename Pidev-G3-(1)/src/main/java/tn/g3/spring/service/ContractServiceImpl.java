@@ -8,10 +8,10 @@ import tn.g3.spring.entity.Contract;
 import tn.g3.spring.repository.ContractRepository;
 
 @Service
-public class ContractService implements IContractService{
+public class ContractServiceImpl implements IContractService{
 	@Autowired
 	ContractRepository contractrepository;
-	private static final Logger L = LogManager.getLogger(ContractService.class);
+	private static final Logger L = LogManager.getLogger(ContractServiceImpl.class);
 
 	@Override
 	public List<Contract> retrieveAllContracts() {

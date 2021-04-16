@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,7 +60,7 @@ public class Contract implements Serializable {
 	@ManyToOne
 	Client client;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="contract")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="contract", fetch = FetchType.LAZY)
 	private  List<ContractOffer> contractOffers;
 	
 	public Contract(){}
@@ -118,5 +119,36 @@ public class Contract implements Serializable {
 	}
 	public void setpremiumContract(Float  premiumContract){
 		this.premiumContract=  premiumContract;
+	}
+
+	public Contract(long idContract, String descriptionContract, Date startContract, Date finishContract,
+			ContractStatus statusContract, ContractPaymentType paymentType, Float premiumContract, Product product,
+			Client client) {
+		super();
+		this.idContract = idContract;
+		this.descriptionContract = descriptionContract;
+		this.startContract = startContract;
+		this.finishContract = finishContract;
+		this.statusContract = statusContract;
+		this.paymentType = paymentType;
+		this.premiumContract = premiumContract;
+		this.product = product;
+		this.client = client;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 }

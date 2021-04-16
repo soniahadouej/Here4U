@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,9 +51,9 @@ public class Sinistre implements Serializable{
 	@Column(name="Documents")
 	private File documents ;
 	
-	/* //User
+	//User
 	@ManyToOne 
-	private User user; */
+	private Client client; 
 
 	/* fi classe User
 	 * @OneToMany(MappedBy=user )

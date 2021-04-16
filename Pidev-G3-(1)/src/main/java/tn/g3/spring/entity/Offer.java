@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +49,7 @@ public class Offer implements Serializable {
 	/*@ManyToMany(mappedBy="offers", cascade = CascadeType.ALL) 
 	private Set<Contract> contracts;*/
 	
-	@OneToMany(mappedBy="offer",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="offer",cascade = CascadeType.ALL, fetch = FetchType.LAZY )
 	private  List<ContractOffer> contractOffers;
 
 	public long getIdOffer() {
@@ -121,14 +122,6 @@ public class Offer implements Serializable {
 		this.nameOffer = nameOffer;
 		this.codeOffer = codeOffer;
 		this.maxRedemption = maxRedemption;
-	}
-
-	public List<ContractOffer> getContractOffers() {
-		return contractOffers;
-	}
-
-	public void setContractOffers(List<ContractOffer> contractOffers) {
-		this.contractOffers = contractOffers;
 	}
 
 	
