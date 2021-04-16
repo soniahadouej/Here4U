@@ -12,4 +12,21 @@ import tn.g3.spring.entity.Smsrequest;
 @Service
 public class Smsservice {
 
+	private final Twilioproperties twilioproperties;
+	
+	@Autowired
+	public Smsservice(Twilioproperties twilioproperties)
+	{
+		this.twilioproperties=twilioproperties;
+	}
+	
+	//send message to number
+	public String sendsms(Smsrequest smsrequest)
+	{
+     
+		Message message=Message.creator(new PhoneNumber("+21658276052"), new PhoneNumber(twilioproperties.getFromNumber()), "Your transaction has been successfully done").create();
+        return message.getStatus().toString();
+        
+	
+	}
 }

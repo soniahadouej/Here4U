@@ -41,26 +41,7 @@ public class Transaction implements Serializable {
 	@JsonIgnore
     private Contract transactionprice;
 
-    private int nbreC;
-    private float amountC;
-    
-    
-	public int getNbreC() {
-		return nbreC;
-	}
-
-	public void setNbreC(int nbreC) {
-		this.nbreC = nbreC;
-	}
-
-	public float getAmountC() {
-		return amountC;
-	}
-
-	public void setAmountC(float amountC) {
-		this.amountC = amountC;
-	}
-
+   
 
 
 	 

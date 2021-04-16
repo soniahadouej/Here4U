@@ -45,7 +45,22 @@ public class PaypalController {
 	    "descriptionContract":  "jjjj"
 	    }	*/
 	
-	
+	@GetMapping("/pay/{id_transaction}")
+	public String payment(@PathVariable("id_transaction") int idt ) throws PayPalRESTException {
+		
+		Transaction c= transaction.retrieveTransactions(idt);
+		Payment payment = service.createPayment(c.getTransactionAmount(), c.getTransactionprice().getCurrency() , c.getTransactionType().toString(), c.getTransactionprice().getIntent(), c.getTransactionprice().getDescriptionContract(), "http://localhost:8000/" + CANCEL_URL,
+				"http://localhost:8000/" + SUCCESS_URL);
+				//(c.getPremiumContract(), c.getCurrency() , c.getPaymentType(), c.getIntent(), c.getDescriptionContract()
+		for(Links link:payment.getLinks()) {
+			if(link.getRel().equals("approval_url")) {
+				//return "success" ;
+				return "redirect:"+link.getHref();
+			}
+		}
+		//return "redirect:/"; 
+		return "paypal";
+	}
 
 	@GetMapping(value = CANCEL_URL) //cas derreur
 	public String cancelPay() {

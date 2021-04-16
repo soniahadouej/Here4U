@@ -1,6 +1,8 @@
 package tn.g3.spring.entity;
 
 import java.io.File;
+import javax.persistence.PreRemove;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,9 +18,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Sinistre")
+@DynamicUpdate
 public class Sinistre implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -51,19 +57,22 @@ public class Sinistre implements Serializable{
 	SinisterMotif motifStatus;
 	
 	
-	
-	@Column(name="Documents")
-	private File documents ;
+	@Column(name="Documents" ,length = Integer.MAX_VALUE , nullable = true )
+	private byte[] documents ;
+	 
 	
 	/* ************************ */
 
-	 @ManyToOne( cascade = CascadeType.ALL , fetch= FetchType.EAGER  )
+	 @ManyToOne//( cascade = CascadeType.ALL , fetch= FetchType.EAGER  )
 //	 @JoinColumn(name = "idPerson" , referencedColumnName = "IdPerson")
 	 @JsonIgnore
 	 private Person person;
 	 
 	 
-	 
+		@PreRemove
+		private void preRemove() {
+			setPerson(null);
+		}
 	
 	 
 	public Person getPerson() {
@@ -75,7 +84,6 @@ public class Sinistre implements Serializable{
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-
 
 
 	public Long getIdSinistre() {
@@ -150,16 +158,18 @@ public class Sinistre implements Serializable{
 
 
 
-	public File getDocuments() {
+ 
+
+
+
+	public byte[] getDocuments() {
 		return documents;
 	}
 
 
-
-	public void setDocuments(File documents) {
+	public void setDocuments(byte[] documents) {
 		this.documents = documents;
 	}
-
 
 
 	@Override
@@ -234,7 +244,7 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
-			File documents) {
+			byte[] documents) {
 		super();
 		this.typeSinistre = typeSinistre;
 		this.description = description;
@@ -246,7 +256,7 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
-			SinisterMotif motifStatus, File documents) {
+			SinisterMotif motifStatus,  byte[] documents) {
 		super();
 		this.typeSinistre = typeSinistre;
 		this.description = description;
@@ -259,7 +269,7 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
-			SinisterStatus status, SinisterMotif motifStatus, File documents) {
+			SinisterStatus status, SinisterMotif motifStatus,  byte[] documents) {
 		super();
 		this.idSinistre = idSinistre;
 		this.typeSinistre = typeSinistre;
@@ -273,7 +283,7 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
-			SinisterMotif motifStatus, File documents, Person person) {
+			SinisterMotif motifStatus,  byte[] documents, Person person) {
 		super();
 		this.typeSinistre = typeSinistre;
 		this.description = description;
@@ -287,7 +297,7 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
-			SinisterStatus status, SinisterMotif motifStatus, File documents, Person person) {
+			SinisterStatus status, SinisterMotif motifStatus,  byte[] documents, Person person) {
 		super();
 		this.idSinistre = idSinistre;
 		this.typeSinistre = typeSinistre;

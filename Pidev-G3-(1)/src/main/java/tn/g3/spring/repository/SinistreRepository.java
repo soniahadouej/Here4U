@@ -6,16 +6,18 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import tn.g3.spring.entity.Person;
 import tn.g3.spring.entity.Sinistre;
 
 @Repository
-public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
+public interface SinistreRepository  extends JpaRepository<Sinistre, Long> {
 
 	
 
@@ -59,8 +61,8 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 		//UPDATE
 		@Transactional
 		@Modifying(clearAutomatically = true)
-		@Query("UPDATE Sinistre s SET s.description=?2 WHERE s.idSinistre=?1")
-		void updateStatus (Long id, String newStatus );
+		@Query("UPDATE Sinistre s SET s.person=NULL WHERE s.idSinistre=?1")
+		void updateidperson(Long id);
 		
 		
 		
@@ -82,6 +84,9 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 		@Query("select dx_h from TableMortalité t where id_table = ?1 ")
 		float findByDecesDxHomme(int deces);
 		
+		
+		
+		
 		/* *********************************** */
 			//recherche par type sinistre 
 			/*	@Query("select c from Sinistre c where c.typeSinistre ='DécesVieEntiere' ")
@@ -97,6 +102,8 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 				@Query("select c.person from Sinistre c where c.person = ?1 ")
 			    long findByIdPerson(Long idP);
 				
+				@Query("select c.idContract from Contract c where c.idContract = ?1 ")
+			    long findByIdContrat(Long idP);
 				
 
 				/* ******************************** JOINTURE ************** */ 
@@ -105,4 +112,9 @@ public interface SinistreRepository  extends CrudRepository<Sinistre, Long> {
 				//je selectionne les user ayant un sinistre et ayant fait une reclammation
 				//nhot lid mtaa la reclammation ykharajlii la description du sinistre li aamlou 
 				
+				 
+				// *******************DELETE
+
+				@Query("select c.person from Sinistre c where c.idSinistre = ?1 ")
+			    Person findByidperson2(long ch);
 }

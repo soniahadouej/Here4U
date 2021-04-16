@@ -59,7 +59,7 @@ public class TransactionController {
 	PersonRepository userRepository;
 	
 	/*@Autowired
-	TwillioController twilioCon;*
+	TwillioController twilioCon;*/
 
 
 	//http://localhost:8000/SpringMVC/servlet/transaction/all
@@ -96,6 +96,26 @@ public class TransactionController {
 
 
 	//as an investor
-	
+	// http://localhost:8000/SpringMVC/servlet/transaction/GiveMoney/{idContract}/{nbreC}/{amount}
+	@GetMapping("/GiveMoney/{idContract}") // /{nbreC}/{amount}")
+	@ResponseBody
+	public ResponseEntity<Object> payWithCoupon (@PathVariable("idContract")Long idC , Smsrequest smsrequest) { //, @PathVariable("nbreC") int nbreC,@PathVariable("amount")float amount){
+		Contract c=  contract.retrieveContract(idC);
+		Date d=convertToDateViaSqlTimestamp(LocalDateTime.now());
+		//float sum=amount * nbreC;
+		        
+		Transaction t =new Transaction(d ,c.getPaymentType().toString());
+		t.setTransactionprice(c);
+ 		
+		t.setTransactionAmount(c.getPremiumContract());
+		transService.addTransaction(t);
+		String status=smsservice.sendsms(smsrequest);
+		   if("sent".equals(status)||"queued".equals(status))
+	       {
+	       	return new ResponseEntity<Object>("sent successfully",HttpStatus.OK);
+	       }
+		   return new ResponseEntity<Object>("failed to send message",HttpStatus.NOT_FOUND);
+		//twilioCon.sendotp("+21626233576");
+	}
 
 }

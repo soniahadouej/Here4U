@@ -13,6 +13,7 @@ public interface ISinistreSerivce {
 	 void deleteSinistre(String id);
 	 Sinistre updateSinistre(Sinistre s);
 	 Sinistre retrieveSinistre(String id);
+	 Sinistre updateDescription(Long id ,String desc);
 	
 	 Long getMax();
 	  //recherches
@@ -46,15 +47,16 @@ public interface ISinistreSerivce {
 	  double calculCapitalHomme(double prime , int ageClient, int AgeMax, double taux);
 	  
 	  
-	  
-	  
+	  ///////////////////////////////////////////////CAPITAL DECES
+	  public double CapitalCasDécesHomme(double prime , double taux, int ageClient, Long idC);
+      public double CapitalCasDécesFemme(double prime , double taux, int ageClient, Long idC);
 	  
 	  
 	  
 	  public void FindByIdPer(Long id);
 
 	  //// CREDIT SIMULATOR
-	  public double CreditSimulator(Long idp, Long idc);
+	  public double CreditSimulator( Long idp, Long idc, float emprunt);
 	  
 	  
 	  ////JOINTURE

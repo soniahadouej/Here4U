@@ -73,6 +73,42 @@ public class PaypalService {
 		return payment.execute(apiContext, paymentExecute);
 	}
 	
+	public Payment createPayment(
+			Float premiumContract, 
+			CurrencyContrat currencyContrat, 
+			String transType, //paypal or any other
+			String intent,
+			String description,
+			String cancelUrl, 
+			String successUrl
+			) throws PayPalRESTException{
+	//public Payment createPayment(Float premiumContract, ContractPaymentType paymentType,String descriptionContract) throws PayPalRESTException{
+		Amount amount = new Amount();
+		String curr =currencyContrat.toString();
+		amount.setCurrency(curr);
+		premiumContract = new BigDecimal(premiumContract).setScale(2, RoundingMode.HALF_UP).floatValue();
+		amount.setTotal(String.format("%.2f", premiumContract));
+
+		Transaction transaction = new Transaction();
+		transaction.setDescription(description);
+		transaction.setAmount(amount);
+
+		List<Transaction> transactions = new ArrayList<>();
+		transactions.add(transaction);
+
+		Payer payer = new Payer();
+		payer.setPaymentMethod(transType.toString());
+
+		Payment payment = new Payment();
+		payment.setIntent(intent.toString());
+		payment.setPayer(payer);  
+		payment.setTransactions(transactions);
+		RedirectUrls redirectUrls = new RedirectUrls();
+		redirectUrls.setCancelUrl(cancelUrl);
+		redirectUrls.setReturnUrl(successUrl);
+		payment.setRedirectUrls(redirectUrls);
+
+		return payment.create(apiContext); }
 }
 		// TODO Auto-generated method stub
 	
