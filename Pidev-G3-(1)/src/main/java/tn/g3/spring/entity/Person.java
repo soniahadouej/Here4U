@@ -42,19 +42,20 @@ public abstract class Person implements Serializable {
 
 	/* ******************SINISTRE*********** */
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "person")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "person")
 	private List<Sinistre> SinistreList;
 	
+
 	
 	/* ****************************CONTRAT****************************** */
-	@OneToMany(mappedBy="person")
+	@OneToMany(mappedBy="person",cascade = CascadeType.ALL , fetch= FetchType.EAGER )
 	private Set<Contract> contracts;
 	
 	
 	
 	/* **************************CLAIM ******************************* */
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL , fetch= FetchType.EAGER )
 	@JoinColumn(name = "idClaim") //,referencedColumnName="idClaim")
 	private Claim claim;
 

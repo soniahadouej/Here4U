@@ -59,9 +59,9 @@ public abstract class Product implements Serializable {
 	@Column(name="Name")
 	protected String nameProduct;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="product")
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy="product")
 	private Set<Contract> contracts;
-	
+	*/
 	@ManyToOne
 	Agent agent;
 	

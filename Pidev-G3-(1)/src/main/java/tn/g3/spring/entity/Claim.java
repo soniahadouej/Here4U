@@ -49,7 +49,7 @@ public class Claim implements Serializable {
 	//////******************************************************************//////////
 	
 	@JsonIgnore
-	@OneToOne(mappedBy="claim" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="claim" )
 	private Person person;
 	
 	

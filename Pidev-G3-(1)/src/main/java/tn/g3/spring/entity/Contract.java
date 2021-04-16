@@ -77,7 +77,7 @@ public class Contract implements Serializable {
 	private Set<Sinister> sinisters;*/
 	
 	////////////////////////////////////////////////
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "idPerson",referencedColumnName="IdPerson")
 	 private Person person;
 	
@@ -187,7 +187,7 @@ public class Contract implements Serializable {
 		this.premiumContract = premiumContract;
 	}
 
-	public Product getProduct() {
+	/*public Product getProduct() {
 		return product;
 	}
 
@@ -209,21 +209,21 @@ public class Contract implements Serializable {
 
 	public void setOffers(Set<Offer> offers) {
 		this.offers = offers;
-	}
+	}*/
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+/*
 	@ManyToOne
 	Product product;
 	
-	@ManyToOne
+	@ManyToOne  
 	Client client;
+	*/
 	
-	@ManyToMany(cascade = CascadeType.ALL) 
+	@ManyToMany 
 	private Set<Offer> offers;
-	
 	
 	public Contract(){}
 	
@@ -233,8 +233,7 @@ public class Contract implements Serializable {
 	}
 
 	public Contract(long idContract, ProductType productType, String descriptionContract, Date startContract,
-			Date finishContract, ContractStatus statusContract, ContractPaymentType paymentType, Float premiumContract,
-			Product product, Client client, Set<Offer> offers) {
+			Date finishContract, ContractStatus statusContract, ContractPaymentType paymentType, Float premiumContract ) {
 		super();
 		this.idContract = idContract;
 		this.productType = productType;
@@ -244,14 +243,13 @@ public class Contract implements Serializable {
 		this.statusContract = statusContract;
 		this.paymentType = paymentType;
 		this.premiumContract = premiumContract;
-		this.product = product;
+		/*this.product = product;
 		this.client = client;
-		this.offers = offers;
+		this.offers = offers;*/
 	}
 
 	public Contract(ProductType productType, String descriptionContract, Date startContract, Date finishContract,
-			ContractStatus statusContract, ContractPaymentType paymentType, Float premiumContract, Product product,
-			Client client, Set<Offer> offers) {
+			ContractStatus statusContract, ContractPaymentType paymentType, Float premiumContract ) {
 		super();
 		this.productType = productType;
 		this.descriptionContract = descriptionContract;
@@ -260,9 +258,9 @@ public class Contract implements Serializable {
 		this.statusContract = statusContract;
 		this.paymentType = paymentType;
 		this.premiumContract = premiumContract;
-		this.product = product;
+	/*	this.product = product;
 		this.client = client;
-		this.offers = offers;
+		this.offers = offers;*/
 	}
 
 	
