@@ -4,7 +4,7 @@ public interface IOfferSimulationService {
 	
 	float calculateGift(Long idc ) throws ParseException;
 	float calculateDiscount(Long idc);
-	float calculateLoyalty(Long idc);
+//	float calculateLoyalty(Long idc);
 	double calculateScore(Long idc);
 
 }

@@ -31,19 +31,19 @@ public class OfferSimulationService {
 	}
 
 	// http://localhost:8080/SpringMVC/servlet/calculate-loyalty/{contract-id}
-	@GetMapping(value = "calculate-loyalty/{contract-id}")
+	/*@GetMapping(value = "calculate-loyalty/{contract-id}")
 	@ResponseBody
 	public float calculateLoyalty (@PathVariable("contract-id")Long idc ) {
 
 		return offerSimulationService.calculateLoyalty(idc);
-	}
+	}*/
 
 	// http://localhost:8080/SpringMVC/servlet/calculate-score/{contract-id}
 	@GetMapping(value = "calculate-score/{contract-id}")
 	@ResponseBody
-	public float calculateScore (@PathVariable("contract-id")Long idc ) {
+	public double calculateScore (@PathVariable("contract-id")Long idc ) {
 
-		return offerSimulationService.calculateLoyalty(idc);
+		return offerSimulationService.calculateScore(idc);
 	}
 
 }
