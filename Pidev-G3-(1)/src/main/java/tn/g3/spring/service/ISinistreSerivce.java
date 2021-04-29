@@ -62,5 +62,10 @@ public interface ISinistreSerivce {
 	  ////JOINTURE
 	  public List<Sinistre> findSinisterfromClaim(Long id);
 	  
+	  
+	  /////////////////////////////////JSF
+	  	  public List<Sinistre> getAllSinistres();
+	  	public int addOrUpdateSinistre(Sinistre sinistre);
+	  
 }
 

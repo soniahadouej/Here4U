@@ -56,6 +56,7 @@ public class Sinistre implements Serializable{
     @Column(name="Motif")
 	SinisterMotif motifStatus;
 	
+	private boolean actif;
 	
 	@Column(name="Documents" ,length = Integer.MAX_VALUE , nullable = true )
 	private byte[] documents ;
@@ -75,6 +76,8 @@ public class Sinistre implements Serializable{
 		}
 	
 	 
+
+
 	public Person getPerson() {
 		return person;
 	}
@@ -294,6 +297,30 @@ public class Sinistre implements Serializable{
 		this.person = person;
 	}
 
+	
+	public Sinistre(SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
+			  byte[] documents, Person person) {
+		super();
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.documents = documents;
+		this.person = person;
+	}
+
+	public Sinistre(Long idSinistre,SinisterType typeSinistre, String description, Date dateOccurence, SinisterStatus status,
+			  byte[] documents, Person person) {
+		super();
+		this.idSinistre = idSinistre;
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.documents = documents;
+		this.person = person;
+	}
+	
 
 
 	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
