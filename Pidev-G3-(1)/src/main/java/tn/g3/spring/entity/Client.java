@@ -56,11 +56,25 @@ public class Client extends Person implements Serializable {
 	private Set<Contract> contracts;
 
 	public Client(){}
-	public Client(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex/*, Adress adress*/,Integer cin,CivilStatus category,String job,Float salary,String login,String password,String email,Integer nbWarning,Date startDate){
-		super(idPerson,personType,firstName,lastName,phoneNumber,age,sex/*,adress*/);
-		this.cin=cin;this.category=category;this.job=job;this.salary=salary;this.login=login;this.password=password;this.email=email;this.nbWarning=nbWarning;this.startDate=startDate;
-		
+	 
+	public Client(long idPerson, List<Sinistre> sinistreList, String personType, String firstName, String lastName,
+			Integer phoneNumber, Integer age, PersonSex sex, String password, Role role, Integer cin,
+			CivilStatus category, String job, Float salary, String login, String password2, String email,
+			Integer nbWarning, Date startDate, Set<Contract> contracts) {
+		super(idPerson, sinistreList, personType, firstName, lastName, phoneNumber, age, sex, password, role);
+		this.cin = cin;
+		this.category = category;
+		this.job = job;
+		this.salary = salary;
+		this.login = login;
+		password = password2;
+		this.email = email;
+		this.nbWarning = nbWarning;
+		this.startDate = startDate;
+		this.contracts = contracts;
 	}
+
+	
 	public Integer getCin() {
 		return cin;
 	}
@@ -121,26 +135,5 @@ public class Client extends Person implements Serializable {
 	public void setContracts(Set<Contract> contracts) {
 		this.contracts = contracts;
 	}
-	public Client(long idPerson, List<Sinistre> sinistreList, String personType, String firstName, String lastName,
-			Integer phoneNumber, Integer age, PersonSex sex, Integer cin, CivilStatus category, String job,
-			Float salary, String login, String password, String email, Integer nbWarning, Date startDate,
-			Set<Contract> contracts) {
-		super(idPerson, sinistreList, personType, firstName, lastName, phoneNumber, age, sex);
-		this.cin = cin;
-		this.category = category;
-		this.job = job;
-		this.salary = salary;
-		this.login = login;
-		this.password = password;
-		this.email = email;
-		this.nbWarning = nbWarning;
-		this.startDate = startDate;
-		this.contracts = contracts;
-	}
-	public Client(long idPerson, List<Sinistre> sinistreList, String personType, String firstName, String lastName,
-			Integer phoneNumber, Integer age, PersonSex sex) {
-		super(idPerson, sinistreList, personType, firstName, lastName, phoneNumber, age, sex);
-	}
-	
 	
 }

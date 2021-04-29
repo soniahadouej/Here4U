@@ -160,7 +160,36 @@ public abstract class Person implements Serializable {
 	@Column(name = "Sex")
 	protected PersonSex sex;
 	
+	private String password;
 	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+ 
+	
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Claim getClaim() {
+		return claim;
+	}
+
+	public void setClaim(Claim claim) {
+		this.claim = claim;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private String email;
 
 public Set<Contract> getContracts() {
@@ -230,7 +259,7 @@ public Set<Contract> getContracts() {
 	}
 */
 	public Person(long idPerson, List<Sinistre> sinistreList, String personType, String firstName, String lastName,
-			Integer phoneNumber, Integer age, PersonSex sex/*, Adress adress*/) {
+			Integer phoneNumber, Integer age, PersonSex sex/*, Adress adress*/, String password, Role role) {
 		super();
 		this.idPerson = idPerson;
 		SinistreList = sinistreList;
@@ -241,6 +270,9 @@ public Set<Contract> getContracts() {
 		this.age = age;
 		this.sex = sex;
 		//this.adress = adress;
+		this.password = password;
+		this.role = role;
+		
 	}
 
 
@@ -248,7 +280,7 @@ public Set<Contract> getContracts() {
 	}
 
 	public Person(Long idPerson, String personType, String firstName, String lastName, Integer phoneNumber, Integer age,
-			PersonSex sex/*, Adress adress*/) {
+			PersonSex sex/*, Adress adress*/, String password, Role role) {
 		this.idPerson = idPerson;
 		this.personType = personType;
 		this.firstName = firstName;
@@ -257,6 +289,8 @@ public Set<Contract> getContracts() {
 		this.age = age;
 		this.sex = sex;
 		//this.adress = adress;
+		this.password = password;
+		this.role = role;
 
 	}
 	
