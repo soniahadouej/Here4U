@@ -12,6 +12,8 @@ import tn.g3.spring.entity.Contract;
 @Repository
 public interface ContractRepository extends CrudRepository<Contract,Long> {
 
+	@Query("select c.premiumContract from Contract c where c.person = '2L' ")
+	List<Long> findByIdPerson();
 
 
 }

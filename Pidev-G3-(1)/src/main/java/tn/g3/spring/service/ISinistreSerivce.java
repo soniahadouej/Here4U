@@ -66,6 +66,8 @@ public interface ISinistreSerivce {
 	  /////////////////////////////////JSF
 	  	  public List<Sinistre> getAllSinistres();
 	  	public int addOrUpdateSinistre(Sinistre sinistre);
+	  	public void deleteSinistre1(long id) ;
+	  	public List<Sinistre> getAllSinistresById();
 	  
 }
 

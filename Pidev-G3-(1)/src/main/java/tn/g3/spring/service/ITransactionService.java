@@ -14,5 +14,6 @@ public interface ITransactionService {
 	Transaction retrieveTransactions(int id);
 
 	List<Transaction> listAll();
-
+ int addOrUpdateTransaction(Transaction t);
+ public List<Transaction> getAllTransById();
 }

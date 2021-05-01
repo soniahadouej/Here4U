@@ -61,10 +61,42 @@ public class Sinistre implements Serializable{
 	@Column(name="Documents" ,length = Integer.MAX_VALUE , nullable = true )
 	private byte[] documents ;
 	 
+	@Column(name="Reglementation")
+	private float reglemntation ;
+	
+	
+	
 	
 	/* ************************ */
 
-	 @ManyToOne//( cascade = CascadeType.ALL , fetch= FetchType.EAGER  )
+	 public boolean isActif() {
+		return actif;
+	}
+
+
+
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+
+
+
+
+	public float getReglemntation() {
+		return reglemntation;
+	}
+
+
+
+
+	public void setReglemntation(float reglemntation) {
+		this.reglemntation = reglemntation;
+	}
+
+
+
+	@ManyToOne//( cascade = CascadeType.ALL , fetch= FetchType.EAGER  )
 //	 @JoinColumn(name = "idPerson" , referencedColumnName = "IdPerson")
 	 @JsonIgnore
 	 private Person person;
@@ -333,6 +365,25 @@ public class Sinistre implements Serializable{
 		this.status = status;
 		this.motifStatus = motifStatus;
 		this.documents = documents;
+		this.person = person;
+	}
+
+
+
+
+	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
+			SinisterStatus status, SinisterMotif motifStatus, boolean actif, byte[] documents, float reglemntation,
+			Person person) {
+		super();
+		this.idSinistre = idSinistre;
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.motifStatus = motifStatus;
+		this.actif = actif;
+		this.documents = documents;
+		this.reglemntation = reglemntation;
 		this.person = person;
 	}
 	
