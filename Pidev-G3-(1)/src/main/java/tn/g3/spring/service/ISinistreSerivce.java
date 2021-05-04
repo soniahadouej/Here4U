@@ -72,5 +72,6 @@ public interface ISinistreSerivce {
 	  	
 	  	
 	  	public float CVE(Long idS);
+	  	
 }
 

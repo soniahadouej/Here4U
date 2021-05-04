@@ -42,6 +42,9 @@ public class Contract implements Serializable {
 	@Column(name="Product")
 	private ProductType productType;
 	
+	
+	private String NomContract;
+	
 	@Column(name="Description")
 	private String descriptionContract;
 
@@ -91,6 +94,14 @@ public class Contract implements Serializable {
 	/* ********************************** */
 	
 	
+	public String getNomContract() {
+		return NomContract;
+	}
+
+	public void setNomContract(String nomContract) {
+		NomContract = nomContract;
+	}
+
 	public long getIdContract() {
 		return idContract;
 	}
@@ -261,6 +272,45 @@ public class Contract implements Serializable {
 	/*	this.product = product;
 		this.client = client;
 		this.offers = offers;*/
+	}
+
+	public Contract(long idContract, ProductType productType, String nomContract, String descriptionContract,
+			Date startContract, Date finishContract, ContractStatus statusContract, ContractPaymentType paymentType,
+			CurrencyContrat currency, String intent, Float premiumContract, Person person,
+			List<Transaction> transactionCredit) {
+		super();
+		this.idContract = idContract;
+		this.productType = productType;
+		NomContract = nomContract;
+		this.descriptionContract = descriptionContract;
+		this.startContract = startContract;
+		this.finishContract = finishContract;
+		this.statusContract = statusContract;
+		this.paymentType = paymentType;
+		this.currency = currency;
+		this.intent = intent;
+		this.premiumContract = premiumContract;
+		this.person = person;
+		this.transactionCredit = transactionCredit;
+	}
+
+	public Contract(ProductType productType, String nomContract, String descriptionContract, Date startContract,
+			Date finishContract, ContractStatus statusContract, ContractPaymentType paymentType,
+			CurrencyContrat currency, String intent, Float premiumContract, Person person,
+			List<Transaction> transactionCredit) {
+		super();
+		this.productType = productType;
+		NomContract = nomContract;
+		this.descriptionContract = descriptionContract;
+		this.startContract = startContract;
+		this.finishContract = finishContract;
+		this.statusContract = statusContract;
+		this.paymentType = paymentType;
+		this.currency = currency;
+		this.intent = intent;
+		this.premiumContract = premiumContract;
+		this.person = person;
+		this.transactionCredit = transactionCredit;
 	}
 
 	

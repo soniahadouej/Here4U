@@ -1,5 +1,5 @@
 package tn.g3.spring.entity;
 
-public enum ProductType {l
+public enum ProductType {l,VieEntiere
 
 }
