@@ -69,5 +69,8 @@ public interface ISinistreSerivce {
 	  	public void deleteSinistre1(long id) ;
 	  	public List<Sinistre> getAllSinistresById();
 	  
+	  	
+	  	
+	  	public float CVE(Long idS);
 }
 
