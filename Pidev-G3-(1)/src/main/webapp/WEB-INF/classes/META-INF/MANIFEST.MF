@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: Pidev-G3
+Implementation-Version: 1.0
+Built-By: Sonia
+Implementation-Vendor-Id: tn.g3.spring
+Build-Jdk: 1.8.0_60
+Implementation-URL: https://spring.io/projects/spring-boot/Pidev-G3
+Created-By: Maven Integration for Eclipse
+

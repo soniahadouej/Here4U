@@ -23,7 +23,7 @@ public interface IContractOfferService {
 	ContractOffer getContractOfferPK(ContractOfferPK copk);
 	String activateContactOffer (ContractOfferPK copk);
     String desactivateContractOffer (ContractOfferPK copk);
-    List<Offer> ShowOffersHistory();
+    List<Offer> ShowOffersHistory(); 
     
 	
 	
