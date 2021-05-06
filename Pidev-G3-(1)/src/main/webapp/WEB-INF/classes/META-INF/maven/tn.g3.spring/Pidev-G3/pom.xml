@@ -21,8 +21,7 @@
 	<dependency>
     <groupId>javax.servlet</groupId>
     <artifactId>jstl</artifactId>
-    <version>1.2</version>
-  </dependency>
+    </dependency>
  <dependency>
 		<groupId> com.intersult </groupId>
 		<artifactId> pdf-renderkit </artifactId>
@@ -62,8 +61,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.16</version>
-		</dependency>
+			</dependency>
  
  
  
