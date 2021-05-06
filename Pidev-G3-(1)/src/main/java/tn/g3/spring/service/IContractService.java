@@ -16,4 +16,6 @@ public interface IContractService {
 	 float calculPrimerentefemme(float rente , int ageClient, int nombreanne, double taux);
 	 float calculPrimerentehomme(float rente , int ageClient, int nombreanne, double taux);
 	 float calculPrimeAuto(float sinistre,ProductType p);
+	//long addOrUpdateContract(Contract contract);
+	List<Contract> getAllContracts();
 }

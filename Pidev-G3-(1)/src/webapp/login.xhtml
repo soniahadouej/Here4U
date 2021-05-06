@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+xmlns:ui="http://java.sun.com/jsf/facelets">  <!--  template="/AdminTemplate/home.xhtml" >-->  
+
+	<ui:define name="login">
+
+		<div class="mx-auto main-content">
+			<div class="section__content section__content--p30">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+						<ui:param name="page_name" value="Connexion" />
+						<ui:define name="content">
+						<h:form id="form">
+							<b>Connexion</b>
+ 							<h:panelGrid columns="2">
+
+								<div class="form-group ">
+									<h:outputText value="Login (Email)" styleClass="control-label" />
+									<h:inputText value="#{userController.login}" styleClass="form-control" />
+								</div>
+								<div class="form-group">
+									<h:outputText value="Mot de passe" styleClass="control-label"/>
+									<h:inputSecret value="#{userController.password}" styleClass="form-control" />
+								</div>
+								<h:commandButton id="btn" value="Connexion" class="btn btn-primary" action="#{userController.doLogin()}" />
+								<h:message for="btn"/>
+
+							</h:panelGrid> 
+						</h:form>
+						</ui:define>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+ </ui:composition>
+
+
+
+
+

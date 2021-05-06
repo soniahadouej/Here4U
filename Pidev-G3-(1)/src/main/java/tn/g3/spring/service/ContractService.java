@@ -18,6 +18,11 @@ public class ContractService implements IContractService{
 	ContractRepository contractrepository;
 	private static final Logger L = LogManager.getLogger(ContractService.class);
 
+	/*@Override
+	public long addOrUpdateContract(Contract contract) {
+	contractrepository.save(contract);
+	return contract.getidContract();
+	}*/
 	@Override
 	public List<Contract> retrieveAllContracts() {
 		List<Contract> contracts = (List<Contract>)contractrepository.findAll();
@@ -25,6 +30,10 @@ public class ContractService implements IContractService{
 			L.info("contract +++ : "+contract);
 		}
 		return contracts;
+	}
+	@Override
+	public List<Contract> getAllContracts() {
+	return (List<Contract>) contractrepository.findAll();
 	}
 	@Override
 	public Contract addContract(Contract c) {
@@ -127,5 +136,4 @@ public class ContractService implements IContractService{
 		return (prime+fraicontract*prime);
 		
 	}
-	
 }
