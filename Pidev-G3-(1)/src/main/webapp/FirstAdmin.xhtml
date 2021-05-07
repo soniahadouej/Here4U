@@ -447,40 +447,95 @@
 
 								<!-- DATA TABLE -->
 
-								<h3 class="title-5 m-b-35">ALL Sinisters</h3>
+								<h3 class="title-5 m-b-35"> Offers </h3>
 
 								<div class="table-responsive table-responsive-data2">
 
 									<h:panelGroup columns="2">
+										<tr>
+										<td><h:outputText value="OfferType"></h:outputText></td>
+										<td><h:selectOneMenu value="#{userController.typeOffer}">
+										<f:selectItem itemLabel="Choisir le OfferType" itemValue="#{null}" />
+										<f:selectItems value="#{userController.offerTypes}" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr><td><h:outputText value="description Offer"></h:outputText></td>
+									<td><h:inputText value="#{userController.descriptionOffer}"></h:inputText></td></tr>
+									<tr><td><h:outputText value="nameOffer"></h:outputText></td>
+									<td><h:inputText value="#{userController.nameOffer}">
+									<tr><td><h:outputText value="codeOffer"></h:outputText></td><td><h:inputText
+									value="#{userController.codeOffer}"></h:inputText></td></tr>
+									<tr><td><h:outputText value="maxRedemption"></h:outputText></td>
+									<td><h:inputText value="#{userController.maxRedemption}"></h:inputText></td></tr>
+
+									<tr><td colspan="2"> <h:commandButton value="Ajouter Offer"
+									action="#{userController.addOffer()}" /><h:commandButton value="Modifier Offer"
+									action="#{userController.updateCOffer()}" /></td></tr>
+									</table></h:form></h:panelGroup>
+									<h:panelGroup columns="2">
 										<h:form>
-											<h:dataTable value="#{esmController.getentité()}"
-												var="entity" border="1" styleClass="table table-data2">
-												
+											<h:dataTable value="#{userController.offers}" var="offer" border="1">
 
+												<h:column><f:facet name="header"><h:outputText value="offer type" /></f:facet>
+												<h:outputText value="#{contract.typeOffer}" /></h:column>
+												<h:column><f:facet name="header"><h:outputText value="description Offer" /></f:facet>
+												<h:outputText value="#{contract.descriptionOffer}" /></h:column>
+												<h:column><f:facet name="header"><h:outputText value="name Offer"/></f:facet>
+												<h:outputText value="#{contract.nameOffer}" /></h:column>
+												<h:column><f:facet name="header"><h:outputText value="Code Offer"/></f:facet>
+												<h:outputText value="#{contract.codeOffer}" /></h:column>
+												<h:column><f:facet name="header"><h:outputText value="MaxRedemption" /></f:facet>
+												<h:outputText value="#{contract.maxRedemption}" /></h:column>
 												<h:column>
-													<f:facet name="header">
-														<h:outputText value="Id " />
-													</f:facet>
-													<h:outputText value="#{entity.id}" />
+													<f:facet name="header"><h:outputText value="Action" /></f:facet>
+													<h:commandButton action="#{userController.deleteOffer(offer.idOffer)}"
+													value="Supprimer Offer" />
+												</h:column>	
+												<h:column>
+														<f:facet name="header"><h:outputText value="Action" /></f:facet>
+														<h:commandButton action="#{userController.displayOffer(offer)}"
+														value="Afficher Offer" />
 												</h:column>
-									<!--houni tzidou les attributs mtekom lkol -->
-												
-
-													<h:com
-														action="#{esmController.fonction}" />
-												<!-- exemple bouton supprimer ou update -->
-
-
-												</h:column>
-
-
-
-
 
 											</h:dataTable>
 										</h:form>
 									</h:panelGroup>
+									<h:panelGroup columns="2"><h:form><table>
+										<tr><td><h:outputText value="contractOffer"></h:outputText></td>
+										<td><h:inputText value="#{userController.contractOffer}"></h:inputText></td>
+										<td><h:outputText value="contractOfferPK"></h:outputText></td>
+										<td><h:inputText value="#{userController.contractOfferPK}"></h:inputText></td>
+										<td><h:outputText value="contract"></h:outputText></td>
+										<td><h:inputText value="#{userController.contract}"></h:inputText></td>
+										<tr><td><h:outputText value="expireOffer"></h:outputText></td>
+										<td><h:inputText value="#{userController.expireOffer}"><f:convertDateTime pattern="yyyy-MM-dd"/></h:inputText></td></tr>
+										<tr>
+										<td><h:outputText value="OfferStatus"></h:outputText></td>
+										<td><h:selectOneMenu value="#{userController.statusOffer}">
+										<f:selectItem itemLabel="Choisir le OfferStatus" itemValue="#{null}" />
+										<f:selectItems value="#{userController.offerstates}" />
+										</h:selectOneMenu></td>
+										</tr>
+										<tr><td colspan="2"> <h:commandButton value="Ajouter ContractOffer "
+										action="#{userController.addContractOffer(contractOffer.idContract, contractOffer.idOffer, contractOffer.startOffer, contractOffer.expireOffer, contractOffer.statusOffer)}"/></td></tr>
+										<tr><td colspan="2"> <h:commandButton value="Activer ContractOffer "
+										action="#{userController.activateContractOffer(contractOffer.contractOfferPK)}" /></td><td><h:outputText value="Offer Activated" /></td></tr>
+										<tr><td colspan="2"> <h:commandButton value="Desactiver ContractOffer "
+										action="#{userController.desactivateContractOffer(contractOffer.contractOfferPK)}" /></td><td><h:outputText value="Offer Desactivated" /></td></tr>
+										<tr><td colspan="2"> <h:commandButton value="Count Active Offers "
+										action="#{userController.countActiveOffers()}"/></td><td><h:outputText value="#{userController.countActiveOffers()}" /></td></tr>
+										<tr><td colspan="2"> <h:commandButton value="Count Stopped Offers "
+										action="#{userController.countStoppedOffers()}"/></td><td><h:outputText value="#{userController.countStoppedOffers()}" /></td></tr>
+										
+										
+										
+										<tr><td colspan="2"> <h:commandButton value="calculer Gift "
+										action="#{userController.calculateGift(contract.idContract)}" /></td><td><h:outputText value="#{userController.calculateGift(contract.idContract)}" /></td></tr>
+										<tr><td colspan="2"> <h:commandButton value="calculer Discount "
+										action="#{userController.calculateDiscount(contract.idContract)}"/></td><td><h:outputText value="#{userController.calculateDiscount(contract.idContract)}" /></td></tr>
+								</table></h:form></h:panelGroup>
 
+									
 								</div>
 								<!-- END DATA TABLE -->
 
@@ -523,3 +578,4 @@
 		</footer>
 	</body>
 </ui:composition>
+© 2021 GitHub, Inc.

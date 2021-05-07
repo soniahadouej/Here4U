@@ -27,10 +27,10 @@ import tn.g3.spring.service.IPersonService;
 
 
 @Scope(value = "session")
-@Controller(value = "controllerJSF") // Name of the bean in Spring IoC
-@ELBeanName(value = "controllerJSF") // Name of the bean used by JSF
+@Controller(value = "userController") // Name of the bean in Spring IoC
+@ELBeanName(value = "userController") // Name of the bean used by JSF
 @Join(path = "/", to = "/AdminTemplate/login.jsf")
-public class ControllerJSF {
+public class UserController {
 
 	@Autowired
 	IPersonService personService;
@@ -189,7 +189,7 @@ public class ControllerJSF {
 		Person authenticatedPerson=personService.authenticate(email, password);
 		if (authenticatedPerson != null && ( authenticatedPerson).getPersonType() == "Agent") {	
 
-			navigateTo = "/AdminTemplate/home.xhtml?faces-redirect=true";
+			navigateTo = "/FirstAdmin.xhtml?faces-redirect=true";
 			loggedIn = true; }
 		else {
 			FacesMessage facesMessage =
@@ -360,7 +360,12 @@ public class ControllerJSF {
 	public void updateOffer()
 	{ offerService.updateOffer(new Offer(idOffer,typeOffer, descriptionOffer, nameOffer, codeOffer, maxRedemption)); }
 
-
+	public OfferType[] getOfferTypes() { return OfferType.values(); }
+	
+	
+	
+	
+	
 	/*--------------------- ContractOffers---------------------------------------------------------*/
 	
 	private ContractOffer contractOffer;
@@ -369,6 +374,7 @@ public class ControllerJSF {
 	private Contract contract; 
 	private Date expireOffer;
 	private OfferStatus statusOffer;
+	public OfferStatus[] getOfferStates() { return OfferStatus.values(); }
 	
 	private List<Contract> contracts;
 
