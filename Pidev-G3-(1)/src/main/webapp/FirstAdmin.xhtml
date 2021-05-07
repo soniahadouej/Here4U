@@ -451,7 +451,7 @@
 
 								<div class="table-responsive table-responsive-data2">
 
-									<h:panelGroup columns="2">
+									<h:panelGroup columns="2"><h:form><table>
 										<tr>
 										<td><h:outputText value="OfferType"></h:outputText></td>
 										<td><h:selectOneMenu value="#{userController.typeOffer}">
@@ -470,7 +470,7 @@
 
 									<tr><td colspan="2"> <h:commandButton value="Ajouter Offer"
 									action="#{userController.addOffer()}" /><h:commandButton value="Modifier Offer"
-									action="#{userController.updateCOffer()}" /></td></tr>
+									action="#{userController.updateOffer()}" /></td></tr>
 									</table></h:form></h:panelGroup>
 									<h:panelGroup columns="2">
 										<h:form>
