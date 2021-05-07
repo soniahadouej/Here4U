@@ -29,7 +29,7 @@ import tn.g3.spring.service.IPersonService;
 @Scope(value = "session")
 @Controller(value = "userController") // Name of the bean in Spring IoC
 @ELBeanName(value = "userController") // Name of the bean used by JSF
-@Join(path = "/", to = "/AdminTemplate/login.jsf")
+@Join(path = "/", to = "/login.jsf")
 public class UserController {
 
 	@Autowired
