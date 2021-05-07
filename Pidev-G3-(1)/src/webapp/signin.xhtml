@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=1" />
+
+<meta name="keywords" content="HTML5 Template" />
+
+<meta name="description" content="Sharehub - Responsive HTML5 Template" />
+
+<meta name="author" content="etheme.com" />
+	</head>
+
+	<div class="col-xl-10 col-lg-12 col-md-9">
+
+		<div class="card o-hidden border-0 shadow-lg my-5">
+	
+			<div class="card-body p-0">
+			
+				
+		
+				<!-- Nested Row within Card Body -->
+				<div class="row">
+			  <!-- 	<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>DOG PIC -->
+				 <img src="images//here4you.png" alt="here4u" width="300" height="350" />
+										<div class="col-lg-6">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">Welcome To Here4U!</h1>
+							</div>
+
+							<!-- form -->
+							<!-- MAIN -->
+						
+							<div class="container">
+								<!--sections-->
+
+								<div class="row">
+
+									<h:panelGroup columns="2">
+
+										<h:form id="form">
+											<b>Connexion</b>
+											
+
+												<div class="form-group ">
+													<h:outputText value="Login (Email)"
+														styleClass="control-label" />
+													<h:inputText value="#{userController.login}"
+														styleClass="form-control" />
+												</div>
+												<div class="form-group">
+													<h:outputText value="Mot de passe"
+														styleClass="control-label" />
+													<h:inputSecret value="#{userController.password}"	styleClass="form-control" />
+												</div>
+												<h:commandButton id="btn" value="Connexion"
+													class="btn btn-primary btn-user btn-block"
+													action="#{userController.doLogin()}" />
+
+
+												<h:message for="btn" />
+
+												<div class="form-group">
+													<div class="custom-control custom-checkbox small">
+														<input type="checkbox" class="custom-control-input"
+															id="customCheck"></input> <label
+															class="custom-control-label" for="customCheck">Remember
+															Me</label>
+													</div>
+												</div>
+												
+												<a href="https://accounts.google.com/"
+													class="btn btn-google btn-user btn-block"> <i
+													class="fab fa-google fa-fw"></i> Login with Google
+												</a>
+												<a href="https://www.facebook.com/"
+													class="btn btn-facebook btn-user btn-block"> <i
+													class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+												</a>
+										</h:form>
+									</h:panelGroup>
+								</div>
+							</div>
+					
+
+							<!--  -->
+
+							<hr />
+							<div class="text-center">
+								<a class="small" href="forgot-password.html">Forgot
+									Password?</a>
+							</div>
+							<div class="text-center">
+								<a class="small" href="register.html">Create an Account!</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</ui:composition>
