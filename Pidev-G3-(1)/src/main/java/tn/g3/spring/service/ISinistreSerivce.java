@@ -72,6 +72,13 @@ public interface ISinistreSerivce {
 	  	
 	  	
 	  	public float CVE(Long idS);
+	  	public float CapDeces(Long idS) ;
+	  	
+	  	
+	  	////////////////////////////////
+	  	public int countVE();
+	  	public int countCD();
+	  	public int countTDE();
 	  	
 }
 

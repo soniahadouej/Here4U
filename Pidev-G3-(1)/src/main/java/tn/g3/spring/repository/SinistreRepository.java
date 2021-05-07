@@ -56,6 +56,11 @@ public interface SinistreRepository  extends JpaRepository<Sinistre, Long> {
 	    List<Sinistre> findByStatusRejetée();
 
 		
+		//JSF
+		@Query("select c from Sinistre c where c.person = '2L'  ")
+	    List<Sinistre> findAllByIdSin();
+
+		
 		
 		//**************************************
 		//UPDATE
@@ -83,6 +88,11 @@ public interface SinistreRepository  extends JpaRepository<Sinistre, Long> {
 
 		@Query("select dx_h from TableMortalité t where id_table = ?1 ")
 		float findByDecesDxHomme(int deces);
+		
+
+		@Query(value = "select MAX(t.id_table) from TableMortalité t  " , nativeQuery = true)
+		int findAgeMax();
+
 		
 		
 		
@@ -117,4 +127,32 @@ public interface SinistreRepository  extends JpaRepository<Sinistre, Long> {
 
 				@Query("select c.person from Sinistre c where c.idSinistre = ?1 ")
 			    Person findByidperson2(long ch);
+				
+			/*	@Query( "select c.person from Sinistre c JOIN  p.idPerson  from Person p where p.idPerson=?1 "
+						)
+			    Person findByidperson3(long ch);*/
+				
+				
+				//////////////////////////////////JSF
+				@Query("select c.idContract from Contract c JOIN c.person u Join u.SinistreList l where l.idSinistre =:idd AND l.typeSinistre ='DécesVieEntiere' AND c.productType = 'VieEntiere'")
+				Long findcontractidbysisnVIEENTIERE(@Param("idd") Long id2 );
+				
+				@Query("select c.premiumContract from Contract c JOIN c.person u Join u.SinistreList l where l.idSinistre =:idd AND l.typeSinistre ='DécesVieEntiere' AND c.productType = 'VieEntiere'")
+				Long findprimebysisnVIEENTIERE(@Param("idd") Long id2 );
+				
+				@Query("select c.premiumContract from Contract c JOIN c.person u Join u.SinistreList l where l.idSinistre =:idd AND l.typeSinistre ='CapitalDeces' AND c.productType = 'CapitalDeces'")
+				Long findcontractidbysisnCapDeces(@Param("idd") Long id2 );
+				
+				
+				////////////////////////stat
+				 @Query("Select count(*) from Sinistre s WHERE s.typeSinistre = 'DécesVieEntiere'")
+					public int CountSinsVE();
+				    @Query("Select count(*) from Sinistre s WHERE s.typeSinistre = 'CapitalDeces'")
+					public int CountSinsCD();
+				    @Query("Select count(*) from Sinistre s WHERE s.typeSinistre = 'RachatTotalVieEntiere'")
+					public int CountSinsTDE();
+
+
 }
+
+

@@ -372,7 +372,7 @@ public class Sinistre implements Serializable{
 
 
 	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
-			SinisterStatus status, SinisterMotif motifStatus, boolean actif, byte[] documents, float reglemntation,
+			SinisterStatus status, SinisterMotif motifStatus,byte[] documents, float reglemntation,
 			Person person) {
 		super();
 		this.idSinistre = idSinistre;
@@ -387,6 +387,20 @@ public class Sinistre implements Serializable{
 		this.person = person;
 	}
 	
+	public Sinistre(Long idSinistre, SinisterType typeSinistre, String description, Date dateOccurence,
+			SinisterStatus status, SinisterMotif motifStatus, float reglemntation,
+			Person person) {
+		super();
+		this.idSinistre = idSinistre;
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.motifStatus = motifStatus;
+
+		this.reglemntation = reglemntation;
+		this.person = person;
+	}
 	
 	
 	
