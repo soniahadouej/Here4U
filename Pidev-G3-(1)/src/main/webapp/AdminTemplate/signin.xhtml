@@ -53,17 +53,17 @@
 												<div class="form-group ">
 													<h:outputText value="Login (Email)"
 														styleClass="control-label" />
-													<h:inputText value="#{personController.login}"
+													<h:inputText value="#{personControllerJSF.email}"
 														styleClass="form-control" />
 												</div>
 												<div class="form-group">
 													<h:outputText value="Mot de passe"
 														styleClass="control-label" />
-													<h:inputSecret value="#{personController.password}"	styleClass="form-control" />
+													<h:inputSecret value="#{personControllerJSF.password}"	styleClass="form-control" />
 												</div>
 												<h:commandButton id="btn" value="Connexion"
 													class="btn btn-primary btn-user btn-block"
-													action="#{personController.doLogin()}" />
+													action="#{personControllerJSF.doLogin()}" />
 
 
 												<h:message for="btn" />

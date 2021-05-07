@@ -17,7 +17,7 @@ import tn.g3.spring.entity.OfferStatus;
 import tn.g3.spring.repository.ContractOfferRepository;
 import tn.g3.spring.repository.ContractRepository;
 import tn.g3.spring.repository.OfferRepository;
-import tn.g3.spring.repository.ClientRepository;
+import tn.g3.spring.repository.PersonRepository;
 @Service
 public class ContractOfferServiceImpl implements IContractOfferService{
 
@@ -31,7 +31,7 @@ public class ContractOfferServiceImpl implements IContractOfferService{
 	ContractRepository contractRepository;
 	
 	@Autowired
-	ClientRepository personRepository;
+	PersonRepository personRepository;
 	
 	private static final Logger L= LogManager.getLogger(ContractOfferServiceImpl.class);
 	

@@ -11,27 +11,27 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import tn.g3.spring.entity.Client;
-import tn.g3.spring.service.IClientService;
+import tn.g3.spring.entity.Person;
+import tn.g3.spring.service.IPersonService;
 
 @RestController
 public class PersonController {
 
 	@Autowired
-	IClientService ps;
+	IPersonService ps;
 
 	// http://localhost:8080/SpringMVC/servlet/retrieve-all-person
 	@GetMapping("/retrieve-all-person")
 	@ResponseBody
-	public List<Client> getPersons() {
-		List<Client> list = ps.retrieveAllPersons();
+	public List<Person> getPersons() {
+		List<Person> list = ps.retrieveAllPersons();
 		return list;
 	} 
 
 	// http://localhost:8080/SpringMVC/servlet/retrieve-person/{person-id}
 	@GetMapping("/retrieve-person/{person-id}")
 	@ResponseBody
-	public Client retrievePerson(@PathVariable("person-id") String id) {
+	public Person retrievePerson(@PathVariable("person-id") String id) {
 		return ps.retrievePerson(id);
 	} 
 
@@ -49,8 +49,8 @@ public class PersonController {
 	// http://localhost:8081/SpringMVC/servlet/add-person 
 	@PostMapping("/add-person")
 	@ResponseBody
-	public Client addPerson(@RequestBody Client p) {
-		Client person = ps.addPerson(p); 
+	public Person addPerson(@RequestBody Person p) {
+		Person person = ps.addPerson(p); 
 		return person;
 	}
 
@@ -66,7 +66,7 @@ public class PersonController {
 	// http://localhost:8080/SpringMVC/servlet/update-person 
 	@PutMapping("/update-person") 
 	@ResponseBody
-	public Client updatePerson(@RequestBody Client person) {
+	public Person updatePerson(@RequestBody Person person) {
 		return ps.updatePerson(person);
 	}
 

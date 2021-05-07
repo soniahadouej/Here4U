@@ -10,10 +10,6 @@ import javax.persistence.OneToMany;
 
 import java.util.Date;
 import java.util.Set;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import javax.persistence.DiscriminatorValue;
 
 @Entity
@@ -22,8 +18,6 @@ public class Client extends Person implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name="CIN", unique=true)
-	private Integer cin;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="CivilStatus")
@@ -32,24 +26,8 @@ public class Client extends Person implements Serializable {
 	@Column(name="Job")
 	private String job;
 	
-	@Column(name="Salary_TND")
-	private Float salary;
-	
-	@Column(name="Login")
-	private String login;
-	
-	@Column(name="Password")
-	private String password;
-	
-	@Column(name="Email")
-	private String email;
-	
 	@Column(name="Warning")
 	private Integer warning;
-	
-	@Temporal (TemporalType.DATE)
-	@Column(name="Start")
-	private Date startDate;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private Set<Contract> contracts;
@@ -57,33 +35,67 @@ public class Client extends Person implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private Set<Sinistre> sinistres;
 
-	public Client(){}
-	public Client(Long idPerson,String personType,String firstName,String lastName,Integer phoneNumber,Integer age,PersonSex sex, Adress adress,Integer cin,CivilStatus category,String job,Float salary,String login,String password,String email,Integer warning,Date startDate){
-		super(idPerson,personType,firstName,lastName,phoneNumber,age,sex,adress);
-		this.cin=cin;this.category=category;this.job=job;this.salary=salary;this.login=login;this.password=password;this.email=email;this.warning=warning;this.startDate=startDate;
-		
-	}
-	public Client(Integer cin) {
-		super();
-		this.cin = cin;
-	}
 	public CivilStatus getCategory() {
 		return category;
 	}
+
 	public void setCategory(CivilStatus category) {
 		this.category = category;
 	}
+
 	public String getJob() {
 		return job;
 	}
+
 	public void setJob(String job) {
 		this.job = job;
 	}
-	public Date getStartDate() {
-		return startDate;
+
+	public Integer getWarning() {
+		return warning;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+
+	public void setWarning(Integer warning) {
+		this.warning = warning;
 	}
+
+	public Set<Contract> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(Set<Contract> contracts) {
+		this.contracts = contracts;
+	}
+
+	public Set<Sinistre> getSinistres() {
+		return sinistres;
+	}
+
+	public void setSinistres(Set<Sinistre> sinistres) {
+		this.sinistres = sinistres;
+	}
+
+	public Client(Long idPerson, Integer cin, String personType, String firstName, String lastName, Integer phoneNumber,
+			Integer age, PersonSex sex, Adress adress, String password, String email, Float salary, Date startDate,
+			CivilStatus category, String job, Integer warning, Set<Contract> contracts, Set<Sinistre> sinistres) {
+		super(idPerson, cin, personType, firstName, lastName, phoneNumber, age, sex, adress, password, email, salary,
+				startDate);
+		this.category = category;
+		this.job = job;
+		this.warning = warning;
+		this.contracts = contracts;
+		this.sinistres = sinistres;
+	}
+
+	public Client(Long idPerson, Integer cin, String personType, String firstName, String lastName, Integer phoneNumber,
+			Integer age, PersonSex sex, Adress adress, String password, String email, Float salary, Date startDate) {
+		super(idPerson, cin, personType, firstName, lastName, phoneNumber, age, sex, adress, password, email, salary,
+				startDate);
+	}
+
 	
-}
+	}
+
+
+	
+
