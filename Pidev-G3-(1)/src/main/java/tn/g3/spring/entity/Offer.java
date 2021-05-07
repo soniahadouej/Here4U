@@ -124,6 +124,16 @@ public class Offer implements Serializable {
 		this.maxRedemption = maxRedemption;
 	}
 
+	public Offer(OfferType typeOffer, String descriptionOffer, String nameOffer, String codeOffer,
+			Integer maxRedemption) {
+		super();
+		this.typeOffer = typeOffer;
+		this.descriptionOffer = descriptionOffer;
+		this.nameOffer = nameOffer;
+		this.codeOffer = codeOffer;
+		this.maxRedemption = maxRedemption;
+	}
+
 	
 }
 
